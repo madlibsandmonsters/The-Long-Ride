@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1119">
+<title>The Long Ride</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --ink:#0E1119; --ink-2:#161B27; --ink-3:#1F2634;
+  --bone:#E9E3D5; --bone-dim:#A9A290;
+  --brass:#C9922F; --verdigris:#6E9285; --rust:#94433A;
+  --rule:#2C3444;
+  --serif:"Hoefler Text","Baskerville","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Avenir Next","Segoe UI",Roboto,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--bone);font-family:var(--serif);font-size:17px;line-height:1.6}
+body{padding-bottom:env(safe-area-inset-bottom)}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 96px}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:20px 0 14px;border-bottom:1px solid var(--rule);margin-bottom:26px;flex-wrap:wrap}
+.brand{font-size:23px;letter-spacing:.02em;font-weight:600}
+.brand em{font-style:normal;color:var(--brass)}
+.top-meta{font-family:var(--sans);font-size:13px;color:var(--bone-dim)}
+
+h1{font-size:40px;line-height:1.12;font-weight:600;margin:0 0 10px}
+h2{font-size:25px;font-weight:600;margin:36px 0 12px}
+h3{font-size:19px;font-weight:600;margin:22px 0 8px}
+p{margin:0 0 14px;max-width:66ch}
+.lede{color:var(--bone-dim);max-width:60ch}
+.sans{font-family:var(--sans)}
+.dim{color:var(--bone-dim)}
+.small{font-size:14px}
+
+.btn{background:transparent;border:1px solid var(--rule);color:var(--bone);
+  padding:11px 18px;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:15px}
+.btn:hover{border-color:var(--brass);color:var(--brass)}
+.btn.primary{background:var(--brass);border-color:var(--brass);color:#15100A;font-weight:600}
+.btn.primary:hover{background:#DBA33D;color:#15100A}
+.btn.ghost{border-color:transparent;color:var(--bone-dim);padding-left:0}
+.btn.ghost:hover{color:var(--brass)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.sm{padding:7px 12px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spread{justify-content:space-between}
+
+input[type=text],textarea,select{width:100%;background:var(--ink-2);border:1px solid var(--rule);
+  border-radius:2px;padding:11px 13px;font-family:var(--sans);font-size:15px}
+textarea{font-family:var(--serif);font-size:17px;line-height:1.65;min-height:150px;resize:vertical}
+label.fld{display:block;font-family:var(--sans);font-size:13px;color:var(--bone-dim);margin:0 0 6px}
+
+/* lens picker */
+.lens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.lens{background:var(--ink);padding:16px 17px;text-align:left;cursor:pointer;border:0;display:block;width:100%}
+.lens:hover{background:var(--ink-2)}
+.lens[aria-pressed=true]{background:var(--ink-3);box-shadow:inset 3px 0 0 var(--brass)}
+.lens .ln{font-size:19px;font-weight:600;margin-bottom:2px}
+.lens .lscope{font-family:var(--sans);font-size:12.5px;color:var(--brass)}
+.lens .ldesc{font-family:var(--sans);font-size:13px;color:var(--bone-dim);margin-top:7px;line-height:1.45}
+
+/* deck guidance */
+.deckbox{border:1px solid var(--rule);border-left:3px solid var(--verdigris);padding:15px 18px;margin:22px 0;background:var(--ink-2)}
+.deckbox h4{margin:0 0 8px;font-size:16px;font-weight:600;color:var(--verdigris)}
+.deckbox ul{margin:0;padding-left:19px;font-family:var(--sans);font-size:14.5px;line-height:1.6}
+.deckbox li{margin-bottom:5px}
+
+/* the drawn card — the hero */
+.card-stage{border:1px solid var(--rule);background:linear-gradient(180deg,var(--ink-2),var(--ink));padding:30px 26px;margin:22px 0;position:relative}
+.card-stage.rev{border-color:var(--rust)}
+.card-arcana{font-family:var(--sans);font-size:12.5px;color:var(--bone-dim);margin-bottom:9px}
+.card-name{font-size:36px;line-height:1.1;font-weight:600;margin:0 0 4px}
+.card-stage.rev .card-name{color:var(--rust)}
+.card-trad{font-family:var(--sans);font-size:14px;color:var(--bone-dim);margin-bottom:16px}
+.card-orient{display:inline-block;font-family:var(--sans);font-size:12px;letter-spacing:.06em;
+  border:1px solid var(--rule);padding:3px 9px;border-radius:2px;color:var(--bone-dim);margin-bottom:16px}
+.card-stage.rev .card-orient{border-color:var(--rust);color:var(--rust)}
+.meaning{border-top:1px solid var(--rule);padding-top:15px;margin-top:4px}
+.meaning .lbl{font-family:var(--sans);font-size:12.5px;color:var(--bone-dim);margin-bottom:4px}
+.prompt{font-size:21px;line-height:1.45;color:var(--brass);margin:0 0 16px;max-width:60ch}
+.reminder{font-family:var(--sans);font-size:14.5px;color:var(--bone-dim);line-height:1.55;max-width:66ch}
+
+.chapline{font-family:var(--sans);font-size:13px;color:var(--bone-dim);
+  display:flex;gap:14px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.chapline b{color:var(--bone);font-weight:600}
+
+/* log entries */
+.entry{border-left:2px solid var(--rule);padding:2px 0 2px 16px;margin:0 0 20px}
+.entry.rev{border-left-color:var(--rust)}
+.entry .ehead{font-size:19px;font-weight:600}
+.entry .emeta{font-family:var(--sans);font-size:12.5px;color:var(--bone-dim);margin-bottom:6px}
+.entry .eprompt{color:var(--brass);font-size:16px;margin-bottom:6px}
+.entry .etext{white-space:pre-wrap}
+.entry.nested{margin-left:22px;border-left-style:dashed}
+
+/* named register */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--rule);border-radius:2px;padding:6px 11px;font-family:var(--sans);font-size:13.5px;
+  background:var(--ink-2);cursor:pointer}
+.chip:hover{border-color:var(--brass);color:var(--brass)}
+.chip .k{color:var(--bone-dim);font-size:11.5px}
+
+hr.rule{border:0;border-top:1px solid var(--rule);margin:30px 0}
+.hidden{display:none!important}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:var(--ink-3);
+  border:1px solid var(--brass);color:var(--bone);padding:11px 18px;font-family:var(--sans);font-size:14px;z-index:50}
+.suggest{border:1px solid var(--rule);border-top:0;background:var(--ink-2);max-height:210px;overflow:auto}
+.suggest button{display:block;width:100%;text-align:left;background:transparent;border:0;padding:9px 13px;
+  cursor:pointer;font-family:var(--sans);font-size:14.5px}
+.suggest button:hover,.suggest button.sel{background:var(--ink-3);color:var(--brass)}
+@media print{body{background:#fff;color:#000}.noprint{display:none!important}
+  .entry{border-left:2px solid #999}.prompt,.eprompt{color:#6b4d10}}
+@media (max-width:520px){h1{font-size:31px}.card-name{font-size:29px}.prompt{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand">The Long <em>Ride</em></div>
+  <div class="top-meta" id="topmeta"></div>
+</header>
+<main id="app"></main>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script>
+/* ============ CARD DATA ============ */
+var MAJORS=[
+ ["The Drifter","The Fool","Arrival; the unknown outsider; a beginning with no past","Beginnings, innocence, a leap taken without looking. Reversed: recklessness, a false start, someone who should not have come."],
+ ["The Huckster","The Magician","A promise, a trick, a bargain; cleverness for sale","Will made manifest; skill, persuasion, resourcefulness. Reversed: manipulation, a con, power misused."],
+ ["The Widow","The High Priestess","A secret; hidden knowledge; what is kept quiet","Intuition, the unseen, knowledge held back. Reversed: secrets rotting, withheld truth, disconnection from what you know."],
+ ["The Homestead","The Empress","Roots; growth; nurture; what is built to last","Abundance, fertility, care, creation. Reversed: neglect, smothering, barren ground."],
+ ["The Cattle Baron","The Emperor","Authority; control; who is really in charge","Structure, dominion, protection through order. Reversed: tyranny, rigidity, authority that has rotted."],
+ ["The Circuit Preacher","The Hierophant","Doctrine; tradition; institution; rules handed down","Shared belief, teaching, orthodoxy. Reversed: dogma, hypocrisy, a tradition breaking."],
+ ["The Reckoning","The Lovers","A choice between two; alliance or rupture","Union, alignment of values, a decision that defines you. Reversed: discord, a bond broken, choosing badly."],
+ ["The Stagecoach","The Chariot","Momentum; haste; a deadline; the unstoppable","Drive, victory through control, forward motion. Reversed: careening, losing the reins, a journey with no destination."],
+ ["The Sheriff","Strength","Endurance; holding firm against real danger","Courage, patience, mastery through gentleness. Reversed: doubt, brittle force, a nerve that fails."],
+ ["The Prospector","The Hermit","Isolation; obsession; the one who went too far alone","Solitude, inner search, hard-won wisdom. Reversed: exile, paranoia, an obsession that consumed someone."],
+ ["The Gold Strike","Wheel of Fortune","Fortune's turn; sudden abundance or loss","Cycles, luck, a turning point beyond anyone's control. Reversed: the turn goes against you; bad timing."],
+ ["The Circuit Judge","Justice","Judgment; consequence; a dispute settled","Truth, fairness, cause and effect. Reversed: corruption, an unjust verdict, consequence dodged."],
+ ["The Hanged Man","The Hanged Man","Sacrifice; suspension; the price of seeing clearly","Surrender, a new angle bought with loss, waiting. Reversed: stalling, a pointless sacrifice, martyrdom for show."],
+ ["The Range War","Death","An ending; something that cannot come back","Transformation, a clean end, what must be let go. Reversed: clinging, a slow rot, refusing the ending."],
+ ["The Truce","Temperance","Balance; compromise; two things blended","Moderation, patience, blending opposites. Reversed: imbalance, a bad mix, a compromise nobody honors."],
+ ["The Company","The Devil","Bondage; corruption; the hook already in","Dependence, appetite, a chain accepted willingly. Reversed: the chain seen for what it is; breaking free, painfully."],
+ ["The Railroad","The Tower","Upheaval from outside; nobody voted","Sudden collapse, revelation, structures falling. Reversed: disaster delayed, or a slower ruin nobody names."],
+ ["The Watering Hole","The Star","Hope; the rare good thing; renewal","Hope, guidance, healing after hardship. Reversed: hope withheld, a promise that dries up."],
+ ["The Long Night","The Moon","Fear; illusion; the uncanny; belief versus fact","Uncertainty, the subconscious, what moves in the dark. Reversed: the fog lifting, or a delusion hardening into fact."],
+ ["The Boomtown","The Sun","Flourishing; clarity; and what it papers over","Success, vitality, plain truth in daylight. Reversed: false cheer, a glare that blinds, borrowed prosperity."],
+ ["Reckoning Comes Due","Judgement","Old debts; awakening; what comes back around","A calling to account, rebirth, the past returning. Reversed: the reckoning refused, or aimed at the wrong person."],
+ ["The World","The World","Completion; the final shape; how it is remembered","Wholeness, the end of a cycle, arrival. Reversed: an ending that will not close; unfinished business."]
+];
+var SUITS=[
+ ["Six-Guns","Wands","force, conflict, ambition, violence"],
+ ["Springs","Cups","bonds, sustenance, faith, community"],
+ ["Rails","Swords","law, order, knowledge, schemes, the outside world"],
+ ["Claims","Pentacles","wealth, land, property, what is owned or owed"]
+];
+var RANKS=["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"];
+var RANKSCALE=[
+ "A rumor, a detail, background color.","A rumor, a detail, background color.","A rumor, a detail, background color.",
+ "A real complication — it changes something already on the page.","A real complication — it changes something already on the page.",
+ "A real complication — it changes something already on the page.","A real complication — it changes something already on the page.",
+ "A crisis — it forces a hard choice or a loss.","A crisis — it forces a hard choice or a loss.","A crisis — it forces a hard choice or a loss.",
+ "COURT — a person enters. Name them.","COURT — a person enters. Name them.","COURT — a person enters. Name them.","COURT — a person enters. Name them."
+];
+</script>
+<script>
+var LENSES=[
+{id:"wide",name:"Wide Country",scope:"General worldbuilding",
+ desc:"Build a whole region — its land, its people, its history from founding to close.",
+ artifact:"A region map and a timeline.",
+ deck:["Use the full 78-card deck.","Separate the 22 Major Arcana into a Big Sky pile — these open each chapter.","Shuffle the 56 Minor Arcana into a Frontier pile — these fill in the texture between big beats.","Draw on a large sheet of paper as you go. Every card should change the map or the timeline."],
+ suits:["Feuds, raids, and violence on the land","Water, faith, families, gathering places","Law, rail, telegraph, the encroaching outside world","Land claims, gold, herds, property"],
+ courts:["A newcomer with a stake in the region","A rider who acts on the region, for good or ill","A woman who holds real power here","A man who holds real power here"],
+ world:"The region's lasting shape — what the American Kingdoms remembers this place for.",
+ quick:["What's here","What's coming","What's buried"],
+ p:["A stranger arrives with no past worth speaking of. Who, and what are they running from?",
+ "Someone sells this region something it didn't know it needed. Does it work?",
+ "A keeper of secrets settles here. What does she know that would upend everything?",
+ "A family puts down real roots. What do they build, and what does it cost the land?",
+ "Someone claims authority over this region. How do they enforce it?",
+ "Organized faith arrives. What does it demand, and who refuses?",
+ "Two factions must choose alliance or rupture. Which, and what's sacrificed?",
+ "Something forces unstoppable momentum — a rush, a chase, a deadline. What's racing here?",
+ "Someone holds this region together against real danger. What danger, and are they equal to it?",
+ "Someone withdraws from the settlement chasing a private obsession. What do they find?",
+ "Fortune turns hard. What is suddenly abundant, or suddenly gone?",
+ "A dispute is finally settled by formal authority. What case, what verdict, who's furious?",
+ "Someone is sacrificed publicly for the region's sake. Who, and was it fair?",
+ "Something the region depended on ends for good. A way of life, a business, a peace?",
+ "Two opposed forces find an uneasy balance. What does each give up to hold it?",
+ "An outside power gets its hooks in. What has it bought, and from whom?",
+ "Sweeping change arrives from outside and nobody gets a vote. What does it flatten?",
+ "Something rare and genuinely good appears. What, and who does it draw?",
+ "Fear or the uncanny takes hold. What's actually out there, and what do people wrongly believe?",
+ "The region truly thrives, for a while. What does it look like at its best, and what's papered over?",
+ "An old debt, crime, or promise comes back around. Whose, and how is it paid?",
+ "The region reaches its lasting shape. What is this place remembered for?"]},
+
+{id:"outfit",name:"The Outfit",scope:"Factions",
+ desc:"Build a gang, company, church, lodge, tribe, or syndicate — what it wants and what will break it.",
+ artifact:"A faction sheet: name, want, holdings, leadership, enemies, and the crack that will break them.",
+ deck:["Use the full deck, or Majors only for a fast sketch.","Big Sky cards are chapters of the outfit's rise and rot — draw them in order.","Frontier cards fill in members, assets, methods, and grudges.","Court cards are always leadership or notable members. Name every one."],
+ suits:["Muscle, enforcement, how they hurt people","Membership, loyalty, what binds them together","Doctrine, rules, structure, methods","Assets, territory, income"],
+ courts:["A recruit or hopeful","An enforcer or field agent","A woman in the leadership tier","A man in the leadership tier"],
+ world:"Their reputation — what everybody says about them, true or not.",
+ quick:["What they say they want","What they actually want","What it costs"],
+ p:["Who founded this outfit, and what were they running from?",
+ "What do they promise people to get them to join? Is it a lie?",
+ "What does the outfit know that it would kill to keep quiet?",
+ "What have they built that they genuinely care for and protect?",
+ "Who actually runs it, and how do they keep control?",
+ "What's their code, creed, or rulebook — and what does it forbid?",
+ "What alliance or split is tearing at them right now?",
+ "What deadline or rival is forcing them to move faster than they'd like?",
+ "Who in the outfit holds the line when things go bad, and why do they?",
+ "Which member has gone off alone chasing something, and what have they found?",
+ "What windfall or disaster just changed their fortunes?",
+ "What internal betrayal has been judged, and what was the punishment?",
+ "Who did the outfit sacrifice to survive, and does anyone still say the name?",
+ "What did they lose that they will never get back?",
+ "Which rival have they quietly cut a deal with, and on what terms?",
+ "Who owns them that they'd never admit to? What did that cost?",
+ "What outside force just shattered a plan of theirs?",
+ "What's the one honest, decent thing this outfit protects?",
+ "What's the fearful story people tell about them — and how much is true?",
+ "What was their high-water mark, and what did it cover up?",
+ "What old crime is catching up with them right now?",
+ "What is this outfit's reputation, and how wrong is it?"]},
+
+{id:"face",name:"The Face",scope:"NPCs",
+ desc:"Build one person from the inside out — want, wound, tell, and hook.",
+ artifact:"A character: name, look, want, wound, a habit that gives them away, and a hook.",
+ deck:["Majors only works well here — 22 cards is a whole life.","Draw Big Sky cards in order as chapters of their life, earliest first.","Add Frontier cards for skills, possessions, relationships, and debts.","Court cards are the people who shaped them, not the character themselves."],
+ suits:["Their temper — what they'll fight for","Who they love, what they believe","What they know; their skills and schemes","What they own, owe, or covet"],
+ courts:["Someone they protect or mentor","A rival or a running partner","A mother figure, or the woman who shaped them","A father figure, or the boss they answer to"],
+ world:"Their epitaph — how they'll be remembered when they're gone.",
+ quick:["What they show","What they hide","What they need"],
+ p:["Where did they come from, and what did they leave behind?",
+ "What's their pitch — the story they tell strangers about themselves?",
+ "What secret do they carry that nobody at the table knows?",
+ "Who or what do they nurture and protect above everything?",
+ "Who has authority over them, and how do they feel about it?",
+ "What did they get taught young that they still can't shake?",
+ "What choice split their life in two? Who or what did they choose?",
+ "What are they chasing right now, and what's the deadline?",
+ "What have they endured that would have broken most people?",
+ "What obsession do they pursue alone, and how far has it taken them?",
+ "What piece of luck — good or terrible — landed on them out of nowhere?",
+ "What were they judged for, fairly or not, and what did it cost?",
+ "What did they give up, and do they think it was worth it?",
+ "Who or what did they lose for good?",
+ "What two sides of themselves do they hold in balance?",
+ "What's their vice, and who profits from it?",
+ "What blew their life apart with no warning?",
+ "What still gives them hope? Who or what do they ride toward?",
+ "What are they afraid of that they'd never say out loud?",
+ "When were they happiest, and what was that happiness built on?",
+ "What debt is coming for them, and how much time do they have?",
+ "What will they be remembered for?"]},
+
+{id:"town",name:"The Town",scope:"Settlements",
+ desc:"Build a settlement with a map and a ledger — who runs what, and what's buried out back.",
+ artifact:"A town map plus a ledger: population, trade, law, church, saloon, and who owns whom.",
+ deck:["Full deck. Draw the town map first — main street, water, the road in.","Big Sky cards are eras of the town's life; Frontier cards are buildings, businesses, and troubles.","Suit tells you what kind of place gets added; rank tells you how much it matters.","Court cards are townsfolk of standing. Put their name on the building they own."],
+ suits:["Trouble, crime, defenses, the jail","Water source, church, families, the saloon","Law offices, rail depot, telegraph, the mayor","Businesses, banks, land titles, the mine"],
+ courts:["A young townsperson with ambitions","The marshal, the freighter, the man who rides out","The madam, the schoolmarm, the woman who really runs things","The mine boss, the banker, the mayor"],
+ world:"The town's name and its reputation on the map.",
+ quick:["Main Street (what's public)","Back Alley (what's hidden)","Boot Hill (what's dead)"],
+ p:["Who was the first to settle here, and why here?",
+ "What brought people in — a claim, a rumor, an advertisement? Was it honest?",
+ "What does this town not talk about?",
+ "Which founding family built the first real house, and do they still hold it?",
+ "Who runs this town, officially or otherwise?",
+ "Where do people worship, and what does the church forbid?",
+ "What split the town in two — and is it settled?",
+ "What's arriving soon that nobody can stop?",
+ "Who keeps the peace here, and what does that cost them?",
+ "Who lives out past the edge of town, and why won't they come in?",
+ "What boom or bust hit this place, and when?",
+ "What was the trial everyone still argues about?",
+ "Who was hanged, run out, or given up to save the town?",
+ "What building stands empty, and what happened in it?",
+ "What uneasy arrangement keeps two factions from open war here?",
+ "Which company, cartel, or bank owns this town's debt?",
+ "What outside force changed this place overnight?",
+ "What's genuinely good here — the reason people stay?",
+ "What do people swear they've seen out past the last lamp?",
+ "What's this town's industry at its peak, and who pays for it?",
+ "What old wrong is about to catch up with this place?",
+ "What's the town called, and what's its reputation?"]},
+
+{id:"hole",name:"The Hole",scope:"Dungeons & sites",
+ desc:"Build a mine, cave, ruin, fort, or lair — room by room, entrance to heart.",
+ artifact:"A site map: areas, connections, hazards, guardians, and the prize.",
+ deck:["Full deck. Sketch the entrance first, then map outward as you draw.","Each Frontier card is one area: the suit says what kind of room, the rank says how deep.","Ace-3 sits near the entrance, 4-7 the middle levels, 8-10 the deepest reaches.","A Court card is placed in the last room you drew — it's what's waiting in there."],
+ suits:["Guardians, traps, threats","Water, air, what still lives here — ghosts, colonies, survivors","Mechanisms, locks, the builders' logic","Treasure, ore, supplies, what's worth carrying out"],
+ courts:["A prisoner, a survivor, or something's young","A wandering guardian on patrol","The intelligence at the center, or the thing that claimed this place","The boss — whatever rules here now"],
+ world:"The heart chamber: the prize, and its price.",
+ quick:["The Door","The Dark","The Prize"],
+ p:["Where's the way in, and who was the last person to walk through it?",
+ "What lures people in here — and what does the lure hide?",
+ "What sealed chamber holds the truth of what this place was?",
+ "What still grows, nests, or breeds down here?",
+ "Who built this, and what were they trying to keep in or out?",
+ "What symbols, shrines, or markings did the builders leave behind?",
+ "What fork in the passage forces a real choice, and what's down each way?",
+ "What in here is on a timer — flooding, collapsing, waking, moving?",
+ "What single obstacle has stopped everyone who's tried before?",
+ "Where did somebody dig too far alone, and what did they hit?",
+ "What did somebody strike down here — a vein, a hoard, a body?",
+ "What evidence of a crime or a verdict is preserved down here?",
+ "What was sealed up or left behind to buy someone else's escape?",
+ "What section collapsed, and what died in it?",
+ "What two forces down here have reached a standoff?",
+ "Who built this to exploit something, and what's still running?",
+ "What broke this place open — a blast, a quake, a breach?",
+ "Where's the one safe room, and why is it safe?",
+ "What lives in the deepest dark, and what do people wrongly believe about it?",
+ "What was this place like when it was working and full of people?",
+ "What comes awake, or comes back, when someone reaches the bottom?",
+ "What's in the heart chamber, and what does taking it cost?"]},
+
+{id:"beast",name:"The Beast",scope:"Monster ecology",
+ desc:"Build a creature as an animal in a landscape — how it lives, and how people live with it.",
+ artifact:"A creature profile: diet, den, range, rivals, sign, and what it's worth.",
+ deck:["Pick the creature's family first (from your regional roster), then draw.","Full deck. Big Sky cards are the big facts of its life; Frontier cards are field details.","Court cards are named individual animals — the ones with bounties and stories.","Reversed cards are good for false beliefs: what people get wrong about it."],
+ suits:["How it hunts, fights, and kills","What it eats and drinks; breeding, young, pack or family structure","Its senses, cunning, patterns — and the weakness hunters exploit","Its territory, what it hoards or ruins, what it's worth dead or alive"],
+ courts:["A juvenile, a scout, or a stray","A notorious rogue individual with a name","The matriarch of the range","The bull — the biggest one anybody's seen"],
+ world:"Its role in the balance — what breaks if it's gone.",
+ quick:["Track (its sign)","Den (its home)","Kill (its work)"],
+ p:["Where did this thing come from — is it native, or did something bring it here?",
+ "What's the trick of it — how does it fool prey, or fool people?",
+ "What does it do that nobody has ever witnessed and lived to report?",
+ "Where does it den, and what does it do with its young?",
+ "Where does it sit in the food chain, and what's its only rival?",
+ "What do local people do about it — ritual, bounty, offering, avoidance?",
+ "What forces it to choose — between range and water, prey and safety?",
+ "When does it move? What season, migration, or cycle drives it?",
+ "Who or what actually keeps this thing in check?",
+ "What's the lone one — the old, the sick, the exile — and what does it do differently?",
+ "What's it worth? Hide, bounty, bones, oil — and who's buying?",
+ "What happened the last time somebody hunted it, and how did that go?",
+ "What does it give up to survive here — size, speed, sleep, its young?",
+ "What happened to its range, its herd, or its food, and how did it adapt?",
+ "How does it coexist with the thing you'd expect it to kill?",
+ "Who has tried to tame, breed, or harness it, and what came of that?",
+ "What changed its world — a rail line, a fire, a drought, a mine?",
+ "What does it need that's rare, and where's the one place it goes for it?",
+ "What do people believe about it that's dead wrong — and gets them killed?",
+ "What does a healthy population of these look like at full strength?",
+ "What's coming back for it — a hunter, a rival, a hard season?",
+ "What breaks in this country if this animal disappears?"]}
+];
+</script>
+<script>
+LENSES.push(
+{id:"job",name:"The Job",scope:"One-shot / adventure / campaign",
+ desc:"Build a story you can actually run — hook, complication, antagonist, twist, payoff.",
+ artifact:"An outline: hook, complication, location, antagonist, twist, stakes, payoff.",
+ deck:["One-shot: Quick Draw. One Big Sky card is the premise; three Frontier cards are hook, catch, and climax.","Adventure: one chapter. Each Frontier card is a scene.","Campaign: full ride. Each Big Sky card is an act; each Frontier card is a session beat or side plot.","Court cards are the cast. Name them — they're who the players will remember."],
+ suits:["Fights, chases, action scenes","Allies, relationships, the moral turn","Mysteries, plans, obstacles, the law","Rewards, costs, what's at stake"],
+ courts:["The client, the victim, or the one who asks for help","The muscle, the rival, the one sent to stop them","The villain, or the woman who's been ahead of them the whole time","The patron, the power behind it, the one who profits"],
+ world:"The ending — and what changed in the setting because of it.",
+ quick:["The Job","The Catch","The Payoff"],
+ p:["Who brings the job, and what aren't they saying?",
+ "What's the offer, and what's wrong with it?",
+ "What's the thing nobody's told the players yet?",
+ "What or who are the players actually protecting here?",
+ "Who has authority over this situation, and will they help or hinder?",
+ "What rule, law, or custom constrains how this can be solved?",
+ "What choice at the midpoint forces the players to pick a side?",
+ "What's the deadline, and what happens when it runs out?",
+ "What has to be endured — a siege, a crossing, a long wait under fire?",
+ "Who knows the truth but won't come in from the cold to tell it?",
+ "What goes sideways through pure bad luck?",
+ "Who gets judged for this, and is the verdict right?",
+ "What do the players have to give up to win?",
+ "What or who dies, one way or another?",
+ "What compromise ends this without anyone getting all of it?",
+ "Who's really behind this, and what do they have their hooks in?",
+ "What's the twist that changes what the job was about?",
+ "What's the genuine reward — and is it what was promised?",
+ "What red herring or false lead will the players chase hardest?",
+ "What does winning look like at its best?",
+ "What old business finally gets settled in the climax?",
+ "How does it end, and what's different in the world afterward?"]},
+
+{id:"ways",name:"The Ways",scope:"Culture",
+ desc:"Build a people — how they live, what's sacred, what they'd never do.",
+ artifact:"A culture sheet: food, dress, building, marriage, death, the sacred, the shameful, and their songs.",
+ deck:["Majors only makes a strong one-hour culture. Full deck for depth.","Big Sky cards are values and institutions; Frontier cards are daily customs and material detail.","Court cards are social roles, not individuals — the elder, the warrior, the initiate.","Reversed cards work well as taboos: the same custom, forbidden or inverted."],
+ suits:["Honor, feuds, how they fight and settle scores","Family, hospitality, food, faith","Law, craft, language, learning","Wealth, trade, land, inheritance"],
+ courts:["Coming of age — how a child becomes an adult","The warrior or rider caste","Matriarchs, grandmothers, the women's authority","Elders, chiefs, headmen"],
+ world:"How outsiders misunderstand them.",
+ quick:["Hearth (home life)","Road (how they treat outsiders)","Grave (what they believe about death)"],
+ p:["How do they greet a stranger, and what do they need to know first?",
+ "What are they famous for making, trading, or talking people into?",
+ "What knowledge is restricted, and who's allowed to have it?",
+ "How do they build, raise children, and mark a household as home?",
+ "Who leads, and where does that authority come from?",
+ "What's their religion, and what does it forbid outright?",
+ "How do they marry, and what makes a match acceptable?",
+ "What journey, migration, or drive shapes their year?",
+ "What hardship do they take pride in surviving?",
+ "What role does the outcast, the hermit, or the exile play among them?",
+ "How do they explain good and bad fortune?",
+ "How do they settle disputes, and what's the worst punishment they hand down?",
+ "What does belonging cost — what does everyone give up?",
+ "How do they mourn, and what do they do with their dead?",
+ "How do they make peace? What are the customs of parley?",
+ "What's their vice, their addiction, or the thing that owns them?",
+ "What outside force is changing them right now, and who's fighting it?",
+ "What do they celebrate, and what does the festival look like?",
+ "What do they fear after dark, and what do they do about it?",
+ "What does a good life look like to them?",
+ "What ancestral obligation still binds them?",
+ "What do outsiders get wrong about these people?"]},
+
+{id:"tale",name:"The Tall Tale",scope:"Supernatural legends",
+ desc:"Build a legend twice — as it's told, and as it actually happened.",
+ artifact:"The story, the teller, the moral, and the truth underneath it.",
+ deck:["Read every card twice: once as the legend tells it, once as what really happened.","Majors only for a tight legend; add Frontier cards for the specific details tellers argue about.","Reversed cards mean the legend has it backwards — good for the gap between story and truth.","Court cards are the cast of the tale, and the King or Queen is also whoever tells it now."],
+ suits:["The deed — the fight, the chase, the killing in the story","The human heart of it — love, grief, faith","The rules of the legend: what you must do, and must never do","What's promised, won, or lost — treasure, land, a soul"],
+ courts:["The child, the innocent, or the one who got away","The hero of the tale, or the thing that hunted them","The woman at the center — victim, witch, or witness","The one who tells this story now, and profits by it"],
+ world:"What the legend is for today — a warning, a comfort, or a con.",
+ quick:["What they say","What happened","Why it's still told"],
+ p:["Who's the story about, and where did they come from?",
+ "What bargain sits at the center of the tale?",
+ "What part of the story do tellers always leave out?",
+ "What home, family, or place does the legend say was lost?",
+ "What authority tried to stop it, or covered it up?",
+ "Which church, elder, or institution keeps this story alive, and why?",
+ "What impossible choice does the story turn on?",
+ "What's the chase, the ride, or the flight everyone remembers?",
+ "What did the hero of the tale endure, and did they hold?",
+ "Who went out alone and came back changed — or didn't come back?",
+ "What role does luck play — a curse, a charm, a coin toss?",
+ "What moral do the tellers insist on, and is it honest?",
+ "What sacrifice ended it, and was it accepted?",
+ "Who dies in the telling, and did they really?",
+ "What truce, ward, or arrangement keeps the thing at bay?",
+ "What appetite or corruption drives the thing in the story?",
+ "What disaster does the legend claim to explain?",
+ "What does the story promise to whoever's brave or good enough?",
+ "What is the thing, actually — and what do people think it is?",
+ "What's the version told to children, with the teeth taken out?",
+ "What brings it back? What's said to wake it?",
+ "Why do people still tell this, and who needs them to?"]},
+
+{id:"sign",name:"The Sign",scope:"Phenomena",
+ desc:"Build an anomaly — a haunting, a storm, a spring that talks, a place the compass spins.",
+ artifact:"What it looks like, where and when it happens, what it does, what causes it, and who uses it.",
+ deck:["Full deck. Fix the location on your map first, then draw.","Big Sky cards define the phenomenon; Frontier cards are effects, witnesses, and exploitation.","Rank is intensity: Ace-3 barely noticeable, 8-10 catastrophic or undeniable.","Court cards are the people entangled with it — witnesses, scholars, owners."],
+ suits:["Its danger — what it destroys or injures","The life it touches; what it heals, twists, or draws in","Its rules and patterns; the science or magic behind it","Who profits; what's extracted from it"],
+ courts:["The first witness, and what it did to them","The one who studies it, or hunts its source","The one who understands it best, and won't say all of it","The power that controls access to it"],
+ world:"Its lasting mark on the land.",
+ quick:["Where","When","Why"],
+ p:["When did it first appear, and who saw it?",
+ "What does it look like — and what does it look like it is, wrongly?",
+ "What does it conceal, or what can only be seen while it's happening?",
+ "What grows, thrives, or breeds because of it?",
+ "Who claims the ground it happens on?",
+ "What ritual, rule, or precaution has grown up around it?",
+ "What does it force people to choose between?",
+ "What's its cycle — the season, hour, or trigger that brings it on?",
+ "Who or what withstands it, and how?",
+ "Who has devoted their life to understanding it?",
+ "What does it give, at random, to whoever's standing there?",
+ "What has been ruled about it — by a court, a church, or a company?",
+ "What does it take from whoever uses it?",
+ "What did it destroy outright?",
+ "What holds it in balance, or keeps it from spreading?",
+ "Who's exploiting it, and what are they pulling out?",
+ "What happened the day it changed, spread, or got much worse?",
+ "What good does it do — the reason people put up with it?",
+ "What do people believe causes it, and how wrong are they?",
+ "What's it like at full strength, in daylight, undeniable?",
+ "What's coming back through it, or because of it?",
+ "What permanent mark has it left on this country?"]},
+
+{id:"word",name:"The Word Going Around",scope:"Rumors",
+ desc:"Build a rumor — or deal a whole table of them in five minutes.",
+ artifact:"The claim, the source, how true it is, who spreads it, and who benefits.",
+ deck:["Fast mode: one Frontier card per rumor. Suit is the subject, rank is how far it's spread, orientation is how true it is. Deal ten and you have a rumor table.","Full mode: one Big Sky card frames the rumor, Frontier cards give the source and the spreaders.","Upright means mostly true. Reversed means mostly false.","Ace-3 one saloon knows. 4-7 the county. 8-10 everybody's heard it."],
+ suits:["Rumors of violence, danger, and killing","Rumors about people — love, betrayal, scandal","Rumors about law, money, plans, and the outside world","Rumors of gold, land, and treasure"],
+ courts:["The kid who heard it first","The rider who carries it town to town","The one who knows the truth of it","The one who planted it"],
+ world:"What it becomes — a legend, a law, or a joke.",
+ quick:["The Claim","The Kernel of truth","The Spreader"],
+ p:["Who brought this rumor into town?",
+ "Who planted it, and what were they selling?",
+ "What true thing is buried inside the false story?",
+ "Which family does this rumor threaten or protect?",
+ "Who in authority wants it believed?",
+ "Which preacher or elder repeats it from the pulpit?",
+ "Who does the rumor force people to choose between?",
+ "How fast is it spreading, and what's carrying it?",
+ "Who publicly refuses to believe it, and why?",
+ "Who's the only person who actually knows, and where are they?",
+ "What happened by pure coincidence that made it sound true?",
+ "What happens when it's finally tested in front of witnesses?",
+ "Who's already been ruined by it?",
+ "Who died, or is said to have died, in this story?",
+ "What compromise version does everyone settle on?",
+ "Who profits by keeping it alive?",
+ "What real event blew this rumor wide open?",
+ "What good thing does it promise people?",
+ "What panic or paranoia does it cause?",
+ "How does the rumor sound at high noon, told plainly, with everyone listening?",
+ "What older story is this just a new coat of paint on?",
+ "What does this rumor end up as — legend, law, or joke?"]},
+
+{id:"rule",name:"The Old Wives' Rule",scope:"Superstitions",
+ desc:"Build a folk rule, its price, and whether it actually works in your world.",
+ artifact:"The rule (always / never), the consequence, the origin, who keeps it, and whether it's true.",
+ deck:["Fast mode: one Frontier card per superstition. Suit is the domain, rank is how seriously it's taken.","Upright gives a protective rule — always do this. Reversed gives a prohibition — never do that.","Full mode: one Big Sky card per rule for origin and consequence.","Draw The World last to decide whether the rule is actually true in your setting."],
+ suits:["Rules about weapons, fighting, and dying","Rules about home, birth, marriage, and water","Rules about travel, tools, the road, and strangers","Rules about money, gold, land, and animals"],
+ courts:["The child who's just been taught it","The trail boss who enforces it on the road","The grandmother who won't hear a word against it","The priest or elder who tolerates it, or condemns it"],
+ world:"Whether the rule is actually true in your world.",
+ quick:["The Rule","The Reason","The Price"],
+ p:["What must a stranger do on arriving, before anything else?",
+ "What charm, trick, or gesture is said to turn bad luck aside?",
+ "What must never be spoken aloud, and what happens if it is?",
+ "What must be done at a birth, a hearth, or a new house?",
+ "What must you do in the presence of someone in authority?",
+ "What does the church say about this rule — and what do people do anyway?",
+ "What must you never do at a crossroads, a fork, or a threshold?",
+ "What must you do before setting out on a journey?",
+ "What must you carry, or never be without?",
+ "What must you never do alone, or after dark, or out past the fence line?",
+ "What's the sign of luck turning, and what do you do when you see it?",
+ "What must you do to settle a wrong so it doesn't follow you?",
+ "What small sacrifice does this rule demand every time?",
+ "What must be done for the dead, without fail?",
+ "What must be given in return for anything taken?",
+ "What must you never accept, no matter who's offering?",
+ "What must you do when the sky, the ground, or the herd turns strange?",
+ "What's the lucky charm everyone here carries, and where's it from?",
+ "What does this rule really ward against?",
+ "What must you do at noon, at harvest, or on the year's best day?",
+ "What does the rule say about the dead coming back?",
+ "Is this rule actually true in your world — and who has proof?"]}
+);
+</script>
+<script>
+/* ============ STORAGE (falls back to memory if blocked) ============ */
+var MEM={};
+var DB={
+  get(k){try{const v=localStorage.getItem(k);return v==null?(MEM[k]??null):v}catch(e){return MEM[k]??null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}MEM[k]=v},
+  del(k){try{localStorage.removeItem(k)}catch(e){}delete MEM[k]}
+};
+var J=(k,d)=>{const v=DB.get(k);if(!v)return d;try{return JSON.parse(v)}catch(e){return d}};
+var SJ=(k,o)=>DB.set(k,JSON.stringify(o));
+
+/* ============ CARD MODEL ============ */
+function majorCard(i){return{t:"major",i,west:MAJORS[i][0],trad:MAJORS[i][1],theme:MAJORS[i][2],mean:MAJORS[i][3]}}
+function minorCard(s,r){return{t:"minor",s,r,west:RANKS[r]+" of "+SUITS[s][0],trad:RANKS[r]+" of "+SUITS[s][1],
+  theme:SUITS[s][2],mean:RANKSCALE[r]}}
+function fullDeck(){const d=[];for(let i=0;i<22;i++)d.push(majorCard(i));
+  for(let s=0;s<4;s++)for(let r=0;r<14;r++)d.push(minorCard(s,r));return d}
+function cardKey(c){return c.t==="major"?"M"+c.i:"m"+c.s+"-"+c.r}
+function cardLabel(c){return c.west+(c.t==="major"?" ("+c.trad+")":"")}
+
+/* accept traditional or western names, numerals, shorthand */
+const NUMWORD={1:"Ace",2:"Two",3:"Three",4:"Four",5:"Five",6:"Six",7:"Seven",8:"Eight",9:"Nine",10:"Ten",
+  ace:"Ace",one:"Ace",two:"Two",three:"Three",four:"Four",five:"Five",six:"Six",seven:"Seven",eight:"Eight",
+  nine:"Nine",ten:"Ten",page:"Page",jack:"Page",knave:"Page",knight:"Knight",queen:"Queen",king:"King"};
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function parseCard(raw){
+  let s=norm(raw), rev=false;
+  s=s.replace(/\b(reversed|reverse|rev|inverted|upside down|rx|r)\b\s*$/,()=>{rev=true;return""}).trim();
+  s=s.replace(/^\s*(reversed|rev)\b/,()=>{rev=true;return""}).trim();
+  if(!s)return null;
+  const bare=s.replace(/^the /,"");
+  for(let i=0;i<22;i++){
+    const w=norm(MAJORS[i][0]).replace(/^the /,""), t=norm(MAJORS[i][1]).replace(/^the /,"");
+    if(bare===w||bare===t||s===norm(MAJORS[i][0])||s===norm(MAJORS[i][1]))return{card:majorCard(i),rev};
+  }
+  // suit first — match the longest alias at the end of the string
+  const ALIAS=[
+    [0,["six guns","sixguns","six gun","wands","wand","staves","staffs","rods","batons","clubs"]],
+    [1,["springs","spring","cups","cup","chalices","hearts","vessels"]],
+    [2,["rails","rail","swords","sword","blades","spades"]],
+    [3,["claims","claim","pentacles","pentacle","coins","coin","disks","discs","coins","diamonds"]]
+  ];
+  let si=-1, rest=null;
+  for(const [idx,names] of ALIAS)
+    for(const nm of names){
+      if(s===nm||s.endsWith(" "+nm)){
+        const r=s.slice(0,s.length-nm.length).replace(/\bof\s*$/,"").trim();
+        if(si<0||nm.length>(rest===null?0:0)){si=idx;rest=r}
+      }
+    }
+  if(si>=0&&rest!==null&&rest){
+    const first=rest.split(" ")[0];
+    const rw=NUMWORD[first]||NUMWORD[parseInt(first)]||null;
+    if(rw)return{card:minorCard(si,RANKS.indexOf(rw)),rev};
+  }
+  return null;
+}
+function searchCards(q){
+  const n=norm(q); if(!n)return[];
+  return fullDeck().filter(c=>norm(c.west).includes(n)||norm(c.trad).includes(n)).slice(0,8);
+}
+
+/* ============ STATE ============ */
+var S=null; // active session
+var K_SESS="lr.session", K_ARCH="lr.archive", K_GRIM="lr.grimoire", K_REG="lr.register", K_LENS="lr.customlenses";
+function allLenses(){return LENSES.concat(J(K_LENS,[]))}
+function lensById(id){return allLenses().find(l=>l.id===id)}
+
+function newSession(lensId,opts){
+  return{id:"s"+Date.now(),lens:lensId,title:opts.title||"",mode:opts.mode,rev:opts.rev,scale:opts.scale,
+    started:new Date().toISOString(),chapter:1,drawn:[],entries:[],pending:null,parent:opts.parent||null};
+}
+function save(){if(S)SJ(K_SESS,S)}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.remove("hidden");
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2200)}
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+/* ============ DRAW ============ */
+function remaining(){
+  const used=new Set(S.drawn);
+  return fullDeck().filter(c=>!used.has(cardKey(c)));
+}
+function drawRandom(majorsOnly){
+  let pool=remaining();
+  if(majorsOnly)pool=pool.filter(c=>c.t==="major");
+  if(!pool.length)return null;
+  const c=pool[Math.floor(Math.random()*pool.length)];
+  const rev=S.rev?Math.random()<0.5:false;
+  return{card:c,rev};
+}
+function promptFor(card,lens){
+  if(card.t==="major"){
+    const ov=J("lr.override."+lens.id,{});
+    return ov[card.i]||lens.p[card.i];
+  }
+  const suit=lens.suits[card.s], scale=RANKSCALE[card.r];
+  if(card.r>=10) return lens.courts[card.r-10]+" — enters through "+SUITS[card.s][0].toLowerCase()+". Who are they, and what do they want?";
+  return "["+SUITS[card.s][0]+"] "+suit+". "+scale;
+}
+function meaningFor(card,rev){
+  if(card.t==="major"){
+    const parts=card.mean.split("Reversed:");
+    return rev?("Reversed — "+(parts[1]||"the card's meaning, blocked, twisted, or false.").trim()):parts[0].trim();
+  }
+  return SUITS[card.s][0]+" ("+SUITS[card.s][1]+"): "+card.theme+". "+card.mean+
+    (rev?" Reversed: it fails, backfires, or is not what it appears.":"");
+}
+</script>
+<script>
+var app=()=>document.getElementById("app");
+var VIEW="home";
+function setMeta(t){document.getElementById("topmeta").textContent=t||""}
+
+/* ---------- HOME / LENS PICKER ---------- */
+function renderHome(){
+  VIEW="home"; setMeta("");
+  const resume=J(K_SESS,null);
+  const arch=J(K_ARCH,[]);
+  let h=`<h1>Pick a lens.</h1>
+  <p class="lede">One deck, one engine. The lens decides what you're building and how every card is read.
+  Choose a scope, and the app tells you which cards to use and what each one is asking.</p>`;
+  if(resume){const l=lensById(resume.lens);
+    h+=`<div class="deckbox"><h4>Session in progress</h4>
+    <p class="small dim" style="margin:0 0 12px">${esc(resume.title||"Untitled")} — ${esc(l?l.name:resume.lens)},
+    chapter ${resume.chapter}, ${resume.entries.length} card${resume.entries.length===1?"":"s"} logged.</p>
+    <div class="row"><button class="btn primary" onclick="resumeSession()">Resume</button>
+    <button class="btn" onclick="finishSession()">Finish and log it</button>
+    <button class="btn ghost" onclick="if(confirm('Discard this session?')){DB.del(K_SESS);renderHome()}">Discard</button></div></div>`;}
+  h+=`<div class="lens-grid">`+allLenses().map(l=>
+    `<button class="lens" onclick="renderSetup('${l.id}')">
+      <div class="ln">${esc(l.name)}</div><div class="lscope">${esc(l.scope)}</div>
+      <div class="ldesc">${esc(l.desc)}</div></button>`).join("")+`</div>
+  <div class="row" style="margin-top:26px">
+    <button class="btn" onclick="renderRegister()">Register${regCount()?" ("+regCount()+")":""}</button>
+    <button class="btn" onclick="renderGrimoire()">Grimoire</button>
+    <button class="btn" onclick="renderArchive()">Past sessions${arch.length?" ("+arch.length+")":""}</button>
+    <button class="btn" onclick="renderLensBuilder()">Build a lens</button>
+  </div>`;
+  app().innerHTML=h;
+}
+
+/* ---------- SETUP ---------- */
+function renderSetup(id,parent){
+  const l=lensById(id); if(!l)return renderHome();
+  setMeta(l.name);
+  app().innerHTML=`<button class="btn ghost" onclick="renderHome()">← All lenses</button>
+  <h1>${esc(l.name)}</h1>
+  <p class="lede">${esc(l.desc)}</p>
+  <p class="small dim"><b>You'll end up with:</b> ${esc(l.artifact)}</p>
+  <div class="deckbox"><h4>Which deck to use</h4><ul>${l.deck.map(d=>"<li>"+esc(d)+"</li>").join("")}</ul></div>
+  <h3>Session</h3>
+  <label class="fld" for="ttl">Name it (optional)</label>
+  <input type="text" id="ttl" placeholder="e.g. The Pit, or Baron Vance, or Wolf Creek">
+  <div style="height:16px"></div>
+  <label class="fld">How do you draw?</label>
+  <div class="row" id="modeRow">
+    <button class="btn" data-v="random" onclick="pick('modeRow',this)">The app draws for me</button>
+    <button class="btn primary" data-v="physical" onclick="pick('modeRow',this)">I'll type my own cards</button>
+  </div>
+  <div style="height:16px"></div>
+  <label class="fld">Reversed cards</label>
+  <div class="row" id="revRow">
+    <button class="btn primary" data-v="1" onclick="pick('revRow',this)">Use reversals</button>
+    <button class="btn" data-v="0" onclick="pick('revRow',this)">Upright only</button>
+  </div>
+  <div style="height:16px"></div>
+  <label class="fld">How long?</label>
+  <div class="row" id="sclRow">
+    <button class="btn" data-v="quick" onclick="pick('sclRow',this)">Quick draw — ${l.quick.map(esc).join(" / ")}</button>
+    <button class="btn primary" data-v="short" onclick="pick('sclRow',this)">Short ride — one chapter</button>
+    <button class="btn" data-v="full" onclick="pick('sclRow',this)">Full ride — five chapters</button>
+  </div>
+  <hr class="rule">
+  <button class="btn primary" onclick="startSession('${l.id}',${parent?("'"+parent+"'"):"null"})">Start the session</button>`;
+}
+function pick(rowId,btn){document.querySelectorAll("#"+rowId+" .btn").forEach(b=>b.classList.remove("primary"));btn.classList.add("primary")}
+function picked(rowId){const b=document.querySelector("#"+rowId+" .btn.primary");return b?b.dataset.v:null}
+
+function startSession(id,parent){
+  S=newSession(id,{title:document.getElementById("ttl").value.trim(),mode:picked("modeRow"),
+    rev:picked("revRow")==="1",scale:picked("sclRow"),parent:parent});
+  save(); renderPlay();
+}
+function resumeSession(){S=J(K_SESS,null);S?renderPlay():renderHome()}
+
+/* ---------- PLAY ---------- */
+function chapterTarget(){return S.scale==="quick"?3:(S.scale==="short"?8:40)}
+function renderPlay(){
+  VIEW="play";
+  const l=lensById(S.lens); setMeta(l.name+(S.title?" · "+S.title:""));
+  const n=S.entries.length, q=S.scale==="quick";
+  let h=`<div class="chapline">
+    <span><b>${esc(l.name)}</b></span>
+    ${S.title?`<span>${esc(S.title)}</span>`:""}
+    ${q?`<span>Quick draw · ${n}/3</span>`:`<span>Chapter <b>${S.chapter}</b></span><span>${n} card${n===1?"":"s"} logged</span>`}
+    <span>${S.mode==="random"?"App draws":"You type"}${S.rev?" · reversals on":""}</span>
+    <span class="dim">${remaining().length} left in deck</span>
+  </div>`;
+
+  if(q&&n<3) h+=`<p class="small dim" style="margin-top:12px">Position ${n+1}: <b>${esc(l.quick[n])}</b></p>`;
+
+  if(S.pending){ h+=cardStageHTML(S.pending,l); }
+  else if(q&&n>=3){ h+=`<h2>That's the spread.</h2><p class="lede">Three cards, three answers. Close it out and take the log.</p>`; }
+  else { h+=drawControlsHTML(l); }
+
+  if(S.entries.length){
+    h+=`<hr class="rule"><h2>This session</h2>`+S.entries.map((e,i)=>entryHTML(e,i)).join("");
+  }
+  h+=`<hr class="rule"><div class="row spread">
+    <div class="row">
+      ${(!q&&S.scale!=="quick")?`<button class="btn" onclick="nextChapter()">End chapter ${S.chapter}</button>`:""}
+      <button class="btn" onclick="renderRegister()">Register</button>
+    </div>
+    <div class="row">
+      <button class="btn primary" onclick="finishSession()">Finish &amp; generate log</button>
+      <button class="btn ghost" onclick="renderHome()">Pause</button>
+    </div></div>`;
+  app().innerHTML=h;
+  const inp=document.getElementById("cardin"); if(inp){inp.focus();inp.oninput=onCardInput;inp.onkeydown=onCardKey}
+}
+function drawControlsHTML(l){
+  const majorsOnly=(S.scale!=="quick"&&S.entries.length===0)||false;
+  if(S.mode==="random"){
+    return `<div class="row" style="margin:24px 0">
+      <button class="btn primary" onclick="doDraw(false)">Draw a card</button>
+      <button class="btn" onclick="doDraw(true)">Draw a Big Sky card</button>
+    </div>
+    <p class="small dim">Big Sky cards are the 22 Major Arcana — they open chapters and ask the large questions.</p>`;
+  }
+  return `<div style="margin:24px 0">
+    <label class="fld" for="cardin">Type the card you drew</label>
+    <input type="text" id="cardin" autocomplete="off" autocapitalize="off" spellcheck="false"
+      placeholder="e.g. Three of Cups reversed — or The Fool, 7 of Wands, Knight of Springs">
+    <div id="sugg" class="suggest hidden"></div>
+    <p class="small dim" style="margin-top:8px">Traditional or Western names both work. Add “reversed” or “rev” at the end for an inverted card.</p>
+  </div>`;
+}
+var SUG=[],SUGI=-1;
+function onCardInput(e){
+  const v=e.target.value, box=document.getElementById("sugg");
+  const p=parseCard(v);
+  SUG=searchCards(v.replace(/\b(reversed|rev|r)\b\s*$/i,"")); SUGI=-1;
+  if(p&&SUG.length<=1){box.classList.add("hidden");return}
+  if(!SUG.length){box.classList.add("hidden");return}
+  box.classList.remove("hidden");
+  box.innerHTML=SUG.map((c,i)=>`<button onclick="chooseSug(${i})">${esc(c.west)} <span class="dim">· ${esc(c.trad)}</span></button>`).join("");
+}
+function chooseSug(i){
+  const inp=document.getElementById("cardin");
+  const rev=/\b(reversed|rev)\b/i.test(inp.value);
+  inp.value=SUG[i].west+(rev?" reversed":"");
+  document.getElementById("sugg").classList.add("hidden"); submitCard();
+}
+function onCardKey(e){
+  const box=document.getElementById("sugg");
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    if(!SUG.length)return; e.preventDefault();
+    SUGI=(SUGI+(e.key==="ArrowDown"?1:SUG.length-1))%SUG.length;
+    [...box.children].forEach((b,i)=>b.classList.toggle("sel",i===SUGI));
+  } else if(e.key==="Enter"){ e.preventDefault(); if(SUGI>=0)chooseSug(SUGI); else submitCard(); }
+}
+function submitCard(){
+  const inp=document.getElementById("cardin"); const p=parseCard(inp.value);
+  if(!p){toast("Didn't catch that card. Try “Three of Cups” or “The Tower”.");return}
+  if(!S.rev)p.rev=false;
+  if(S.drawn.includes(cardKey(p.card))&&!confirm(cardLabel(p.card)+" is already in this session. Log it again?"))return;
+  S.pending={key:cardKey(p.card),card:p.card,rev:p.rev,text:""}; save(); renderPlay();
+}
+function doDraw(majorsOnly){
+  const d=drawRandom(majorsOnly);
+  if(!d){toast(majorsOnly?"No Big Sky cards left.":"The deck is spent.");return}
+  S.pending={key:cardKey(d.card),card:d.card,rev:d.rev,text:""}; save(); renderPlay();
+}
+function cardStageHTML(pend,l){
+  const c=pend.card, isCourt=(c.t==="minor"&&c.r>=10);
+  return `<div class="card-stage${pend.rev?" rev":""}">
+    <div class="card-arcana">${c.t==="major"?"Big Sky · Major Arcana "+c.i:"Frontier · "+SUITS[c.s][1]}</div>
+    <div class="card-name">${esc(c.west)}</div>
+    <div class="card-trad">${esc(c.trad)}</div>
+    <div class="card-orient">${pend.rev?"Reversed":"Upright"}</div>
+    <div class="meaning">
+      <div class="lbl">What this lens is asking</div>
+      <p class="prompt">${esc(promptFor(c,l))}</p>
+      <div class="lbl">General meaning, as a reminder</div>
+      <p class="reminder">${esc(meaningFor(c,pend.rev))}</p>
+      ${c.t==="major"?`<p class="reminder"><span class="dim">Theme:</span> ${esc(c.theme)}</p>`:""}
+    </div>
+    <div style="height:18px"></div>
+    <label class="fld" for="interp">Your interpretation${isCourt?" — name them":""}</label>
+    <textarea id="interp" placeholder="${isCourt?"Give this person a name, then write who they are.":"Write what this means in your world."}">${esc(pend.text)}</textarea>
+    ${isCourt?`<div style="height:12px"></div><label class="fld" for="nm">Name for the register</label>
+      <input type="text" id="nm" placeholder="Their name">`:""}
+    <div style="height:14px"></div>
+    <div class="row">
+      <button class="btn primary" onclick="commitEntry()">Log it${prevGrim(pend.key)?"":""}</button>
+      <button class="btn" onclick="S.pending=null;save();renderPlay()">Discard this card</button>
+    </div>
+    ${prevGrim(pend.key)}
+  </div>`;
+}
+function prevGrim(key){
+  const g=J(K_GRIM,{})[key]||[];
+  if(!g.length)return "";
+  return `<div style="margin-top:18px;border-top:1px solid var(--rule);padding-top:12px">
+    <div class="lbl small dim">You've read this card before</div>`+
+    g.slice(-3).map(x=>`<p class="small dim" style="margin:6px 0"><b>${esc(x.lens)}</b> — ${esc(x.text.slice(0,180))}${x.text.length>180?"…":""}</p>`).join("")+`</div>`;
+}
+function commitEntry(){
+  const t=document.getElementById("interp").value.trim();
+  const nmEl=document.getElementById("nm"); const nm=nmEl?nmEl.value.trim():"";
+  if(!t){toast("Write something first — even one line.");return}
+  const l=lensById(S.lens);
+  const e={key:S.pending.key,card:S.pending.card,rev:S.pending.rev,text:t,name:nm,
+    chapter:S.chapter,at:new Date().toISOString(),prompt:promptFor(S.pending.card,l),staked:!!nm,nested:[]};
+  S.entries.push(e); S.drawn.push(S.pending.key); S.pending=null;
+  const g=J(K_GRIM,{}); (g[e.key]=g[e.key]||[]).push({lens:l.name,text:t,at:e.at}); SJ(K_GRIM,g);
+  if(nm){const r=J(K_REG,[]);r.push({name:nm,lens:l.name,session:S.title||"Untitled",note:t.slice(0,240),at:e.at});SJ(K_REG,r)}
+  save(); renderPlay();
+}
+function entryHTML(e,i){
+  return `<div class="entry${e.rev?" rev":""}">
+    <div class="ehead">${esc(e.card.west)}${e.rev?" — reversed":""}${e.name?" · "+esc(e.name):""}</div>
+    <div class="emeta">${esc(e.card.trad)} · chapter ${e.chapter}</div>
+    <div class="eprompt">${esc(e.prompt)}</div>
+    <div class="etext">${esc(e.text)}</div>
+    <div class="row noprint" style="margin-top:8px">
+      <button class="btn sm ghost" onclick="stakeZoom(${i})">Zoom into this</button>
+      <button class="btn sm ghost" onclick="editEntry(${i})">Edit</button>
+    </div>
+    ${(e.nested||[]).map(n=>`<div class="entry nested"><div class="ehead">${esc(n.title)}</div>
+      <div class="emeta">${esc(n.lens)} · quick draw</div><div class="etext">${esc(n.text)}</div></div>`).join("")}
+  </div>`;
+}
+function editEntry(i){
+  const e=S.entries[i]; const t=prompt("Edit your interpretation:",e.text);
+  if(t!==null&&t.trim()){e.text=t.trim();save();renderPlay()}
+}
+function nextChapter(){
+  if(S.scale==="full"&&S.chapter>=5){toast("Five chapters done. Finish and take the log.");return}
+  S.chapter++; save(); renderPlay(); toast("Chapter "+S.chapter);
+}
+</script>
+<script>
+/* ---------- STAKE & ZOOM ---------- */
+var ZOOM=null;
+function stakeZoom(i){
+  ZOOM={idx:i}; const e=S.entries[i];
+  const subject=e.name||e.card.west;
+  app().innerHTML=`<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back to the session</button>
+  <h1>Zoom in</h1>
+  <p class="lede">You're zooming into <b>${esc(subject)}</b>. Pick a lens and pull a three-card quick draw.
+  The result gets folded back into this session's log, under that card.</p>
+  <div class="lens-grid">`+allLenses().filter(l=>l.id!==S.lens).map(l=>
+    `<button class="lens" onclick="runZoom('${l.id}')"><div class="ln">${esc(l.name)}</div>
+     <div class="lscope">${esc(l.scope)}</div><div class="ldesc">${esc(l.quick.join(" / "))}</div></button>`).join("")+
+  `</div>`;
+}
+function runZoom(lensId){
+  const l=lensById(lensId), e=S.entries[ZOOM.idx], subject=e.name||e.card.west;
+  const cards=[]; const used=new Set(S.drawn);
+  const pool=fullDeck().filter(c=>!used.has(cardKey(c)));
+  if(S.mode==="random"){
+    for(let k=0;k<3&&pool.length;k++){const j=Math.floor(Math.random()*pool.length);
+      const c=pool.splice(j,1)[0]; cards.push({card:c,rev:S.rev?Math.random()<0.5:false});}
+  }
+  let h=`<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back</button>
+  <h1>${esc(l.name)}: ${esc(subject)}</h1>`;
+  for(let k=0;k<3;k++){
+    const pos=l.quick[k];
+    if(cards[k]){
+      const c=cards[k];
+      h+=`<div class="card-stage${c.rev?" rev":""}"><div class="card-arcana">${esc(pos)}</div>
+        <div class="card-name">${esc(c.card.west)}</div><div class="card-trad">${esc(c.card.trad)} · ${c.rev?"Reversed":"Upright"}</div>
+        <div class="meaning"><p class="prompt">${esc(promptFor(c.card,l))}</p>
+        <p class="reminder">${esc(meaningFor(c.card,c.rev))}</p></div>
+        <div style="height:14px"></div><textarea id="z${k}" placeholder="Your reading."></textarea></div>`;
+    } else {
+      h+=`<div class="card-stage"><div class="card-arcana">${esc(pos)}</div>
+        <label class="fld" for="zc${k}">Type the card you drew</label>
+        <input type="text" id="zc${k}" placeholder="e.g. Five of Swords reversed">
+        <div style="height:12px"></div><textarea id="z${k}" placeholder="Your reading."></textarea></div>`;
+    }
+  }
+  h+=`<button class="btn primary" onclick='saveZoom(${JSON.stringify(lensId)},${JSON.stringify(cards.map(c=>({k:cardKey(c.card),w:c.card.west,r:c.rev})))})'>Fold this back in</button>`;
+  app().innerHTML=h;
+}
+function saveZoom(lensId,cardMeta){
+  const l=lensById(lensId), e=S.entries[ZOOM.idx];
+  let lines=[];
+  for(let k=0;k<3;k++){
+    const txt=(document.getElementById("z"+k)||{}).value||"";
+    let cname=cardMeta[k]?cardMeta[k].w+(cardMeta[k].r?" (reversed)":""):
+      ((document.getElementById("zc"+k)||{}).value||"—");
+    if(txt.trim())lines.push(l.quick[k]+" — "+cname+": "+txt.trim());
+    if(cardMeta[k])S.drawn.push(cardMeta[k].k);
+  }
+  if(!lines.length){toast("Nothing written — nothing folded in.");return}
+  e.nested=e.nested||[];
+  e.nested.push({lens:l.name,title:l.name+" on "+(e.name||e.card.west),text:lines.join("\n")});
+  ZOOM=null; save(); renderPlay(); toast("Folded into the log.");
+}
+
+/* ---------- REGISTER / GRIMOIRE / ARCHIVE ---------- */
+function regCount(){return J(K_REG,[]).length}
+function renderRegister(){
+  const r=J(K_REG,[]);
+  app().innerHTML=`<button class="btn ghost" onclick="${S?"renderPlay()":"renderHome()"}">← Back</button>
+  <h1>The register</h1>
+  <p class="lede">Everyone and everything you've named across sessions. Barons, beasts, towns — they can ride into the next region with you.</p>`+
+  (r.length?`<div class="chips">`+r.map((x,i)=>`<button class="chip" onclick="alert(${JSON.stringify(JSON.stringify(x.name+" — "+x.lens+" ("+x.session+")\n\n"+x.note)).replace(/'/g,"&#39;")})">
+    ${esc(x.name)} <span class="k">${esc(x.lens)}</span></button>`).join("")+`</div>
+    <div style="height:20px"></div><button class="btn ghost" onclick="if(confirm('Clear the whole register?')){DB.del(K_REG);renderRegister()}">Clear register</button>`
+  :`<p class="dim">Nothing named yet. Court cards ask for names — those land here.</p>`);
+}
+function renderGrimoire(){
+  const g=J(K_GRIM,{}); const keys=Object.keys(g);
+  let h=`<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Grimoire</h1>
+  <p class="lede">Every reading you've ever written, kept against the card that prompted it. The same card means something different each time you meet it.</p>`;
+  if(!keys.length)h+=`<p class="dim">Empty. It fills as you play.</p>`;
+  else{
+    const deck=fullDeck();
+    h+=deck.filter(c=>g[cardKey(c)]).map(c=>{
+      const list=g[cardKey(c)];
+      return `<div class="entry"><div class="ehead">${esc(c.west)}</div>
+      <div class="emeta">${esc(c.trad)} · ${list.length} reading${list.length===1?"":"s"}</div>`+
+      list.map(x=>`<p class="small" style="margin:4px 0"><span class="dim">${esc(x.lens)} · ${esc(x.at.slice(0,10))}</span><br>${esc(x.text)}</p>`).join("")+`</div>`;
+    }).join("");
+    h+=`<button class="btn ghost" onclick="if(confirm('Erase the grimoire?')){DB.del(K_GRIM);renderGrimoire()}">Erase grimoire</button>`;
+  }
+  app().innerHTML=h;
+}
+function renderArchive(){
+  const a=J(K_ARCH,[]);
+  let h=`<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Past sessions</h1>`;
+  if(!a.length)h+=`<p class="dim">No finished sessions yet.</p>`;
+  else h+=a.map((s,i)=>`<div class="entry"><div class="ehead">${esc(s.title||"Untitled")}</div>
+    <div class="emeta">${esc(lensById(s.lens)?lensById(s.lens).name:s.lens)} · ${esc(s.started.slice(0,10))} · ${s.entries.length} cards</div>
+    <div class="row"><button class="btn sm" onclick="renderLog(${i})">Open log</button></div></div>`).join("");
+  app().innerHTML=h;
+}
+
+/* ---------- FINISH & LOG ---------- */
+function finishSession(){
+  if(!S){renderHome();return}
+  if(!S.entries.length){if(!confirm("Nothing logged. Discard?"))return;DB.del(K_SESS);S=null;return renderHome()}
+  S.ended=new Date().toISOString();
+  const a=J(K_ARCH,[]); a.unshift(JSON.parse(JSON.stringify(S))); SJ(K_ARCH,a);
+  DB.del(K_SESS); S=null; renderLog(0);
+}
+function logSession(i){return J(K_ARCH,[])[i]}
+function renderLog(i){
+  const s=logSession(i); if(!s)return renderHome();
+  const l=lensById(s.lens);
+  setMeta("Session log");
+  app().innerHTML=`<button class="btn ghost noprint" onclick="renderHome()">← All lenses</button>
+  <h1>${esc(s.title||"Untitled session")}</h1>
+  <p class="lede">${esc(l?l.name:s.lens)} — ${esc(l?l.scope:"")}. ${s.entries.length} cards,
+  ${s.chapter} chapter${s.chapter===1?"":"s"}, ${esc(s.started.slice(0,10))}.</p>
+  <p class="small dim">${esc(l?l.artifact:"")}</p>
+  <hr class="rule">
+  ${groupByChapter(s)}
+  <hr class="rule noprint">
+  <h3 class="noprint">Take it with you</h3>
+  <div class="row noprint">
+    <button class="btn primary" onclick="dl(${i},'md')">Markdown</button>
+    <button class="btn" onclick="dl(${i},'json')">JSON</button>
+    <button class="btn" onclick="dl(${i},'foundry')">Foundry journal</button>
+    <button class="btn" onclick="window.print()">PDF / print</button>
+    <button class="btn" onclick="copyMd(${i})">Copy text</button>
+  </div>`;
+}
+function groupByChapter(s){
+  let out="",ch=null;
+  s.entries.forEach(e=>{
+    if(e.chapter!==ch){ch=e.chapter;if(s.scale!=="quick")out+=`<h2>Chapter ${ch}</h2>`}
+    out+=`<div class="entry${e.rev?" rev":""}">
+      <div class="ehead">${esc(e.card.west)}${e.rev?" — reversed":""}${e.name?" · "+esc(e.name):""}</div>
+      <div class="emeta">${esc(e.card.trad)}</div>
+      <div class="eprompt">${esc(e.prompt)}</div>
+      <div class="etext">${esc(e.text)}</div>
+      ${(e.nested||[]).map(n=>`<div class="entry nested"><div class="ehead">${esc(n.title)}</div>
+        <div class="etext">${esc(n.text)}</div></div>`).join("")}
+    </div>`;
+  });
+  return out;
+}
+function toMd(s){
+  const l=lensById(s.lens);
+  let m=`# ${s.title||"Untitled session"}\n\n**Lens:** ${l?l.name:s.lens} — ${l?l.scope:""}  \n`+
+   `**Artifact:** ${l?l.artifact:""}  \n**Date:** ${s.started.slice(0,10)}  \n`+
+   `**Cards:** ${s.entries.length} · **Chapters:** ${s.chapter} · **Mode:** ${s.mode==="random"?"app-drawn":"physical deck"}`+
+   `${s.rev?" · reversals on":""}\n\n---\n\n`;
+  let ch=null;
+  s.entries.forEach(e=>{
+    if(e.chapter!==ch){ch=e.chapter;if(s.scale!=="quick")m+=`## Chapter ${ch}\n\n`}
+    m+=`### ${e.card.west}${e.rev?" (reversed)":""}${e.name?" — "+e.name:""}\n`;
+    m+=`*${e.card.trad}*\n\n> ${e.prompt}\n\n${e.text}\n\n`;
+    (e.nested||[]).forEach(n=>{m+=`**${n.title}**\n\n${n.text.split("\n").map(x=>"- "+x).join("\n")}\n\n`});
+  });
+  const names=s.entries.filter(e=>e.name);
+  if(names.length)m+=`---\n\n## Named this session\n\n`+names.map(e=>`- **${e.name}** (${e.card.west})`).join("\n")+"\n";
+  return m;
+}
+function toFoundry(s){
+  const l=lensById(s.lens);
+  const pages=[];
+  let ch=null,buf="",n=1;
+  const flush=()=>{if(buf){pages.push({name:(s.scale==="quick"?"Quick draw":"Chapter "+ch),type:"text",
+    title:{show:true,level:1},text:{format:1,content:buf}});buf=""}};
+  s.entries.forEach(e=>{
+    if(e.chapter!==ch){flush();ch=e.chapter}
+    buf+=`<h2>${e.card.west}${e.rev?" (reversed)":""}${e.name?" &mdash; "+e.name:""}</h2>`+
+      `<p><em>${e.card.trad}</em></p><blockquote><p>${e.prompt}</p></blockquote>`+
+      `<p>${e.text.replace(/\n/g,"<br>")}</p>`+
+      (e.nested||[]).map(x=>`<h3>${x.title}</h3><p>${x.text.replace(/\n/g,"<br>")}</p>`).join("");
+  });
+  flush();
+  return {name:(s.title||"The Long Ride session"),pages:pages,folder:null,flags:{longride:{lens:s.lens,scale:s.scale}},
+    _stats:{systemId:"dnd5e"}};
+}
+function dl(i,fmt){
+  const s=logSession(i); if(!s)return;
+  const base=(s.title||"long-ride-session").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  let data,name,type;
+  if(fmt==="md"){data=toMd(s);name=base+".md";type="text/markdown"}
+  else if(fmt==="json"){data=JSON.stringify(s,null,2);name=base+".json";type="application/json"}
+  else{data=JSON.stringify(toFoundry(s),null,2);name=base+".foundry.json";type="application/json"}
+  const b=new Blob([data],{type}); const u=URL.createObjectURL(b);
+  const a=document.createElement("a"); a.href=u; a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(u),1500); toast("Saved "+name);
+}
+function copyMd(i){
+  const s=logSession(i); if(!s)return;
+  const t=toMd(s);
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Copied."),()=>fallbackCopy(t));
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);
+  a.select();try{document.execCommand("copy");toast("Copied.")}catch(e){toast("Couldn't copy — use Markdown export.")}
+  document.body.removeChild(a)}
+
+/* ---------- LENS BUILDER ---------- */
+function renderLensBuilder(){
+  app().innerHTML=`<button class="btn ghost" onclick="renderHome()">← Back</button>
+  <h1>Build a lens</h1>
+  <p class="lede">Five answers and the deck does the rest. A lens can be anything with a scope —
+  a religion, a rail line, a bloodline, a war.</p>
+  <label class="fld">Name</label><input type="text" id="bn" placeholder="The Line">
+  <div style="height:12px"></div><label class="fld">Scope — what it builds</label><input type="text" id="bs" placeholder="Railroads">
+  <div style="height:12px"></div><label class="fld">One-line description</label><input type="text" id="bd" placeholder="Build a rail line and everything it runs over.">
+  <div style="height:12px"></div><label class="fld">Artifact — what ends up on the table</label><input type="text" id="ba" placeholder="A route map, a company sheet, a list of stops.">
+  <div style="height:12px"></div><label class="fld">The four suits here — force / bonds / order / wealth</label>
+  <input type="text" id="b1" placeholder="Six-Guns: sabotage, strikes, gunmen"><div style="height:8px"></div>
+  <input type="text" id="b2" placeholder="Springs: crews, towns served, water stops"><div style="height:8px"></div>
+  <input type="text" id="b3" placeholder="Rails: charters, surveys, engineering"><div style="height:8px"></div>
+  <input type="text" id="b4" placeholder="Claims: land grants, freight, capital">
+  <div style="height:12px"></div><label class="fld">Quick draw — three positions, comma separated</label>
+  <input type="text" id="bq" placeholder="Where it starts, What it crosses, Who pays">
+  <div style="height:12px"></div><label class="fld">The frame — the one question every card answers</label>
+  <input type="text" id="bf" placeholder="What does this do to the line, or to what's in its way?">
+  <hr class="rule">
+  <button class="btn primary" onclick="saveLens()">Save this lens</button>
+  <p class="small dim" style="margin-top:12px">Big Sky prompts default to the card's theme plus your frame.
+  You can rewrite any individual prompt later from inside a session.</p>`;
+}
+function saveLens(){
+  const g=id=>document.getElementById(id).value.trim();
+  if(!g("bn")){toast("It needs a name.");return}
+  const frame=g("bf")||"What does this reveal?";
+  const l={id:"c"+Date.now(),name:g("bn"),scope:g("bs")||"Custom",desc:g("bd")||"",
+    artifact:g("ba")||"",custom:true,
+    deck:["Full 78-card deck.","Big Sky cards open chapters; Frontier cards fill in detail.","Court cards are people — name them."],
+    suits:[g("b1")||SUITS[0][2],g("b2")||SUITS[1][2],g("b3")||SUITS[2][2],g("b4")||SUITS[3][2]],
+    courts:["A newcomer","An agent in the field","A woman with power here","A man with power here"],
+    world:"The final shape of it.",
+    quick:(g("bq")||"What's here, What's coming, What's buried").split(",").map(s=>s.trim()).slice(0,3),
+    p:MAJORS.map(m=>m[2].charAt(0).toUpperCase()+m[2].slice(1)+". "+frame)};
+  const c=J(K_LENS,[]); c.push(l); SJ(K_LENS,c); toast("Lens saved."); renderHome();
+}
+
+/* ---------- BOOT ---------- */
+renderHome();
+if("serviceWorker" in navigator){try{navigator.serviceWorker.register("sw.js")}catch(e){}}
+</script>
+</body>
+</html>
