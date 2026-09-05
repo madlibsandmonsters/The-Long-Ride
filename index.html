@@ -52,7 +52,9 @@ p{margin:0 0 14px;max-width:66ch}
 
 input[type=text],textarea,select{width:100%;background:var(--ink-2);border:1px solid var(--rule);
   border-radius:2px;padding:11px 13px;font-family:var(--sans);font-size:15px}
-textarea{font-family:var(--serif);font-size:17px;line-height:1.65;min-height:150px;resize:vertical}
+textarea{font-family:var(--serif);font-size:17px;line-height:1.7;min-height:200px;resize:vertical;overflow:hidden}
+input[type=text]{font-size:16px}
+@media (max-width:520px){textarea{min-height:44vh;font-size:17px}input[type=text],select{font-size:16px}}
 label.fld{display:block;font-family:var(--sans);font-size:13px;color:var(--bone-dim);margin:0 0 6px}
 
 /* lens picker */
@@ -105,6 +107,60 @@ label.fld{display:block;font-family:var(--sans);font-size:13px;color:var(--bone-
 .chip:hover{border-color:var(--brass);color:var(--brass)}
 .chip .k{color:var(--bone-dim);font-size:11.5px}
 
+
+/* ---- session header ---- */
+.sesshead{margin:4px 0 18px}
+.sesstitle{font-size:29px;font-weight:600;line-height:1.15;cursor:pointer;display:inline-block}
+.sesstitle:hover .pencil{color:var(--brass)}
+.pencil{font-family:var(--sans);font-size:12px;color:var(--rule);vertical-align:middle;
+  border:1px solid var(--rule);padding:2px 7px;border-radius:2px;margin-left:8px}
+.sessmeta{font-family:var(--sans);font-size:13px;color:var(--bone-dim);margin-top:4px}
+
+/* ---- framework strip ---- */
+.frame{border:1px solid var(--rule);border-top:3px solid var(--verdigris);background:var(--ink-2);
+  padding:15px 17px;margin:14px 0}
+.frame-h{font-family:var(--sans);font-size:13px;letter-spacing:.04em;color:var(--verdigris);margin-bottom:11px}
+.steps{display:flex;flex-wrap:wrap;gap:7px}
+.step{display:flex;align-items:center;gap:7px;border:1px solid var(--rule);padding:5px 10px;border-radius:2px;
+  font-family:var(--sans);font-size:12.5px;color:var(--bone-dim)}
+.step .sn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;
+  border-radius:50%;border:1px solid var(--rule);font-size:11px}
+.step.done{color:var(--bone-dim);opacity:.55}
+.step.done .sn{background:var(--rule);border-color:var(--rule)}
+.step.now{color:var(--brass);border-color:var(--brass)}
+.step.now .sn{border-color:var(--brass);color:var(--brass)}
+
+/* ---- lens brief ---- */
+.brief{border:1px solid var(--rule);background:var(--ink-2);padding:16px 18px;margin:16px 0}
+.brief-h{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-size:18px;margin-bottom:12px;border-bottom:1px solid var(--rule);padding-bottom:9px}
+.klbl{font-family:var(--sans);font-size:11.5px;letter-spacing:.05em;color:var(--verdigris);
+  display:block;margin-bottom:3px}
+.brief p{margin:0 0 10px}
+.suitgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:12px 0}
+.suitcell{background:var(--ink);padding:10px 12px;font-family:var(--sans);font-size:13.5px;line-height:1.45}
+.brieful{margin:0;padding-left:19px;font-family:var(--sans);font-size:14px;line-height:1.6}
+.brieful li{margin-bottom:5px}
+
+/* ---- scale picker ---- */
+.scale-opts{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.scale-opt{background:var(--ink);border:0;text-align:left;padding:14px 16px;cursor:pointer;
+  display:block;width:100%;color:var(--bone)}
+.scale-opt b{font-size:17px;font-weight:600;display:block;margin-bottom:3px}
+.scale-opt span{font-family:var(--sans);font-size:13.5px;color:var(--bone-dim);line-height:1.45}
+.scale-opt:hover{background:var(--ink-2)}
+.scale-opt.sel{background:var(--ink-3);box-shadow:inset 3px 0 0 var(--brass)}
+.scale-opt.sel b{color:var(--brass)}
+
+/* ---- chapter arc list ---- */
+.arcrow{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule)}
+.arcrow:last-child{border-bottom:0}
+.arcnum{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
+  border:1px solid var(--verdigris);color:var(--verdigris);border-radius:50%;
+  font-family:var(--sans);font-size:12px;flex-shrink:0}
+.arcrow b{font-size:16px}
+
 hr.rule{border:0;border-top:1px solid var(--rule);margin:30px 0}
 .hidden{display:none!important}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:var(--ink-3);
@@ -130,42 +186,112 @@ hr.rule{border:0;border-top:1px solid var(--rule);margin:30px 0}
 <script>
 /* ============ CARD DATA ============ */
 var MAJORS=[
- ["The Drifter","The Fool","Arrival; the unknown outsider; a beginning with no past","Beginnings, innocence, a leap taken without looking. Reversed: recklessness, a false start, someone who should not have come."],
- ["The Huckster","The Magician","A promise, a trick, a bargain; cleverness for sale","Will made manifest; skill, persuasion, resourcefulness. Reversed: manipulation, a con, power misused."],
- ["The Widow","The High Priestess","A secret; hidden knowledge; what is kept quiet","Intuition, the unseen, knowledge held back. Reversed: secrets rotting, withheld truth, disconnection from what you know."],
- ["The Homestead","The Empress","Roots; growth; nurture; what is built to last","Abundance, fertility, care, creation. Reversed: neglect, smothering, barren ground."],
- ["The Cattle Baron","The Emperor","Authority; control; who is really in charge","Structure, dominion, protection through order. Reversed: tyranny, rigidity, authority that has rotted."],
- ["The Circuit Preacher","The Hierophant","Doctrine; tradition; institution; rules handed down","Shared belief, teaching, orthodoxy. Reversed: dogma, hypocrisy, a tradition breaking."],
- ["The Reckoning","The Lovers","A choice between two; alliance or rupture","Union, alignment of values, a decision that defines you. Reversed: discord, a bond broken, choosing badly."],
- ["The Stagecoach","The Chariot","Momentum; haste; a deadline; the unstoppable","Drive, victory through control, forward motion. Reversed: careening, losing the reins, a journey with no destination."],
- ["The Sheriff","Strength","Endurance; holding firm against real danger","Courage, patience, mastery through gentleness. Reversed: doubt, brittle force, a nerve that fails."],
- ["The Prospector","The Hermit","Isolation; obsession; the one who went too far alone","Solitude, inner search, hard-won wisdom. Reversed: exile, paranoia, an obsession that consumed someone."],
- ["The Gold Strike","Wheel of Fortune","Fortune's turn; sudden abundance or loss","Cycles, luck, a turning point beyond anyone's control. Reversed: the turn goes against you; bad timing."],
- ["The Circuit Judge","Justice","Judgment; consequence; a dispute settled","Truth, fairness, cause and effect. Reversed: corruption, an unjust verdict, consequence dodged."],
- ["The Hanged Man","The Hanged Man","Sacrifice; suspension; the price of seeing clearly","Surrender, a new angle bought with loss, waiting. Reversed: stalling, a pointless sacrifice, martyrdom for show."],
- ["The Range War","Death","An ending; something that cannot come back","Transformation, a clean end, what must be let go. Reversed: clinging, a slow rot, refusing the ending."],
- ["The Truce","Temperance","Balance; compromise; two things blended","Moderation, patience, blending opposites. Reversed: imbalance, a bad mix, a compromise nobody honors."],
- ["The Company","The Devil","Bondage; corruption; the hook already in","Dependence, appetite, a chain accepted willingly. Reversed: the chain seen for what it is; breaking free, painfully."],
- ["The Railroad","The Tower","Upheaval from outside; nobody voted","Sudden collapse, revelation, structures falling. Reversed: disaster delayed, or a slower ruin nobody names."],
- ["The Watering Hole","The Star","Hope; the rare good thing; renewal","Hope, guidance, healing after hardship. Reversed: hope withheld, a promise that dries up."],
- ["The Long Night","The Moon","Fear; illusion; the uncanny; belief versus fact","Uncertainty, the subconscious, what moves in the dark. Reversed: the fog lifting, or a delusion hardening into fact."],
- ["The Boomtown","The Sun","Flourishing; clarity; and what it papers over","Success, vitality, plain truth in daylight. Reversed: false cheer, a glare that blinds, borrowed prosperity."],
- ["Reckoning Comes Due","Judgement","Old debts; awakening; what comes back around","A calling to account, rebirth, the past returning. Reversed: the reckoning refused, or aimed at the wrong person."],
- ["The World","The World","Completion; the final shape; how it is remembered","Wholeness, the end of a cycle, arrival. Reversed: an ending that will not close; unfinished business."]
+ ["The Drifter","The Fool","Arrival; the unknown outsider; a beginning with no past","Beginnings, innocence, a leap taken without looking.","Recklessness, a false start, someone who should never have come."],
+ ["The Huckster","The Magician","A promise, a trick, a bargain; cleverness for sale","Will made manifest; skill, persuasion, resourcefulness.","Manipulation, a con, power misused, an empty promise."],
+ ["The Widow","The High Priestess","A secret; hidden knowledge; what is kept quiet","Intuition, the unseen, knowledge deliberately held back.","Secrets rotting, withheld truth, cut off from what you know."],
+ ["The Homestead","The Empress","Roots; growth; nurture; what is built to last","Abundance, fertility, care, creation, the land giving freely.","Neglect, smothering, barren ground, care that suffocates."],
+ ["The Cattle Baron","The Emperor","Authority; control; who is really in charge","Structure, dominion, protection through order and law.","Tyranny, rigidity, authority that has rotted from inside."],
+ ["The Circuit Preacher","The Hierophant","Doctrine; tradition; institution; rules handed down","Shared belief, teaching, orthodoxy, the weight of custom.","Dogma, hypocrisy, a tradition cracking, belief without faith."],
+ ["The Reckoning","The Lovers","A choice between two; alliance or rupture","Union, values aligned, a decision that defines everything after.","Discord, a bond broken, choosing badly, temptation."],
+ ["The Stagecoach","The Chariot","Momentum; haste; a deadline; the unstoppable","Drive, victory through control, forward motion held together.","Careening, losing the reins, a journey with no destination."],
+ ["The Sheriff","Strength","Endurance; holding firm against real danger","Courage, patience, mastery through gentleness not force.","Doubt, brittle force, a nerve that fails at the wrong moment."],
+ ["The Prospector","The Hermit","Isolation; obsession; the one who went too far alone","Solitude, inner search, wisdom bought with loneliness.","Exile, paranoia, an obsession that has eaten someone hollow."],
+ ["The Gold Strike","Wheel of Fortune","Fortune's turn; sudden abundance or loss","Cycles, luck, a turning point beyond anyone's control.","The turn goes against you; bad timing, resisting the cycle."],
+ ["The Circuit Judge","Justice","Judgment; consequence; a dispute settled","Truth, fairness, cause and effect, the scales made even.","Corruption, an unjust verdict, consequence dodged."],
+ ["The Hanged Man","The Hanged Man","Sacrifice; suspension; the price of seeing clearly","Surrender, a new angle bought with loss, willing waiting.","Stalling, a pointless sacrifice, martyrdom performed for show."],
+ ["The Range War","Death","An ending; something that cannot come back","Transformation, a clean end, what must be let go of.","Clinging, a slow rot, refusing an ending that already happened."],
+ ["The Truce","Temperance","Balance; compromise; two things blended","Moderation, patience, opposites brought into proportion.","Imbalance, a bad mix, a compromise nobody actually honors."],
+ ["The Company","The Devil","Bondage; corruption; the hook already in","Dependence, appetite, a chain accepted willingly.","The chain seen for what it is; breaking free, painfully."],
+ ["The Railroad","The Tower","Upheaval from outside; nobody voted","Sudden collapse, revelation, false structures falling.","Disaster delayed, or a slower ruin that nobody will name."],
+ ["The Watering Hole","The Star","Hope; the rare good thing; renewal","Hope, guidance, healing after hardship, faith restored.","Hope withheld, a promise that dries up, despair."],
+ ["The Long Night","The Moon","Fear; illusion; the uncanny; belief versus fact","Uncertainty, the subconscious, what moves out in the dark.","The fog lifting — or a delusion hardening into accepted fact."],
+ ["The Boomtown","The Sun","Flourishing; clarity; and what it papers over","Success, vitality, plain truth in daylight, joy earned.","False cheer, a glare that blinds, prosperity borrowed on credit."],
+ ["Reckoning Comes Due","Judgement","Old debts; awakening; what comes back around","A calling to account, rebirth, the past returning for its due.","The reckoning refused, or aimed squarely at the wrong person."],
+ ["The World","The World","Completion; the final shape; how it is remembered","Wholeness, the end of a cycle, arrival, the circle closed.","An ending that will not close; unfinished business, a loose thread."]
 ];
+
 var SUITS=[
- ["Six-Guns","Wands","force, conflict, ambition, violence"],
- ["Springs","Cups","bonds, sustenance, faith, community"],
- ["Rails","Swords","law, order, knowledge, schemes, the outside world"],
- ["Claims","Pentacles","wealth, land, property, what is owned or owed"]
+ ["Six-Guns","Wands","force, conflict, ambition, will, violence"],
+ ["Springs","Cups","bonds, sustenance, faith, feeling, community"],
+ ["Rails","Swords","law, order, knowledge, schemes, hard truth"],
+ ["Claims","Pentacles","wealth, land, property, labor, what is owned or owed"]
 ];
 var RANKS=["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"];
-var RANKSCALE=[
- "A rumor, a detail, background color.","A rumor, a detail, background color.","A rumor, a detail, background color.",
- "A real complication — it changes something already on the page.","A real complication — it changes something already on the page.",
- "A real complication — it changes something already on the page.","A real complication — it changes something already on the page.",
- "A crisis — it forces a hard choice or a loss.","A crisis — it forces a hard choice or a loss.","A crisis — it forces a hard choice or a loss.",
- "COURT — a person enters. Name them.","COURT — a person enters. Name them.","COURT — a person enters. Name them.","COURT — a person enters. Name them."
+
+/* MINORS[suit][rank] = [upright, reversed, the question it asks] */
+var MINORS=[
+[
+ ["A spark of ambition; raw will; a venture begins.","A false start; a spark that never catches; drive misaimed.","What ignites here, and who lit it?"],
+ ["Planning; standing at the map, choosing a direction.","Fear of the unknown; a plan made badly or abandoned.","What decision about direction is being weighed?"],
+ ["Expansion; foresight; ships sighted coming in.","Overreach; delays; a venture that outran its supply.","What was set in motion earlier that is only now arriving?"],
+ ["Homecoming; celebration; a foundation that holds.","A shaky home; a celebration cut short; unsettled ground.","What is being celebrated, and how solid is the ground under it?"],
+ ["Scrappy competition; everyone fighting for the same thing.","Conflict avoided; tension driven underground.","Who is scrapping with whom, and over what?"],
+ ["Victory; public recognition; riding in acclaimed.","A fall from favor; a hollow win; credit misplaced.","Who gets the credit here, and do they deserve it?"],
+ ["Holding high ground against many; a position defended.","Overwhelmed; giving ground; the position abandoned.","What position is being defended against long odds?"],
+ ["Swift movement; news travelling fast; everything landing at once.","Delays; scattered effort; a message that never arrives.","What moves fast here, and what news travels with it?"],
+ ["Wounded but still on watch; the last stand of a tired guard.","Paranoia; exhaustion; a guard who cannot stand down.","What has been endured, and who is still standing watch?"],
+ ["Carrying far too much; a burden that bends the back.","Dropping the load; refusing the burden; handing it off.","What burden is being carried, and by whom?"],
+ ["A restless messenger; eager news; a young spark.","Immature enthusiasm; bad news; a messenger not believed.","Who arrives with news or ambition, and how green are they?"],
+ ["A headlong charge; daring; passion in motion.","Recklessness; running out of steam; a charge into nothing.","Who charges in without waiting, and what do they run at?"],
+ ["Warm magnetic authority; confidence that draws people in.","Demanding, jealous; authority that consumes all the air.","Which woman here holds people by force of personality?"],
+ ["A bold commander; vision backed by nerve.","A tyrant; impulse dressed as leadership; a burnt-out chief.","Which man leads by daring, and what is he leading toward?"]
+],
+[
+ ["An outpouring of feeling; new love, new faith, a spring rising.","Blocked feeling; the cup spilled; faith withheld.","What feeling or faith begins to flow here?"],
+ ["Two joined; a bond made; a match or a truce of the heart.","Imbalance; a match broken; a bond that never took.","What two are joined, and on what terms?"],
+ ["Friendship; celebration; a community glad together.","Gossip; a third party; celebration turned to excess.","Who gathers here, and what are they celebrating?"],
+ ["Discontent; the offered cup ignored; apathy amid plenty.","Awakening; accepting the offer at last; interest returning.","What is being offered and refused, and why?"],
+ ["Grief over what is spilled; mourning with your back turned.","Recovery; turning at last to what still stands.","What has been lost, and who cannot stop looking at it?"],
+ ["Nostalgia; an old kindness; the past reaching forward.","Stuck in the past; a memory kept far too long.","What memory or old kindness still shapes things here?"],
+ ["Too many choices; visions and illusions hanging in the air.","Clarity; illusions burned off; a choice finally made.","What tempting possibilities are on offer, and which are real?"],
+ ["Walking away from what is nearly enough, to seek more.","Aimless wandering — or a return to what was left behind.","Who walks away from something good, and what are they seeking?"],
+ ["Satisfaction; the wish granted; contentment sat in.","Smugness; a wish that turned out hollow.","Whose wish has been granted, and what did it cost?"],
+ ["Lasting happiness; a family or fellowship whole.","A broken home; harmony performed but not felt.","What here is genuinely whole, and who holds it together?"],
+ ["A tender message; a dreamer; a small kindness offered.","Moodiness; an unwelcome feeling; a message misread.","Who brings feeling into this, gently or awkwardly?"],
+ ["A romantic offer; following the heart; a grand gesture.","A false promise; moody drifting; charm with nothing behind it.","Who arrives with an offer of the heart, and can they be trusted?"],
+ ["Deep compassion; intuition; someone who feels everything.","Smothering; martyrdom; feeling used as leverage.","Which woman here understands people better than they understand themselves?"],
+ ["Emotional mastery; generous counsel; a steady hand.","Manipulation; a cold heart behind a warm manner.","Which man holds others steady, and what is under the calm?"]
+],
+[
+ ["A hard truth; a breakthrough; the blade of clarity.","Confusion; a truth twisted, or used as a weapon.","What hard truth cuts through here?"],
+ ["Stalemate; a choice avoided; the blindfold still on.","The blindfold off; a stalemate finally breaking.","What decision is being refused, and what does refusing it cost?"],
+ ["Heartbreak; a truth that wounds; sorrow named plainly.","Slow healing; grief held instead of released.","What wounds here, and who is wounded by it?"],
+ ["Rest; retreat; recovery in a quiet place.","Restlessness; refusing to stop; rest that comes too late.","Who withdraws to recover, and from what?"],
+ ["Winning at a cost; a hollow triumph; scorched earth.","Making amends; walking away from a fight not worth it.","Who wins here, and what did winning ruin?"],
+ ["Passage to calmer water; a crossing away from trouble.","No escape; a crossing that fails; carrying it with you.","What passage or departure is underway, and who is aboard?"],
+ ["Cunning; theft; working alone and outside the rules.","Getting caught; confession; a scheme unravelling.","What is being taken quietly, and by whom?"],
+ ["Trapped by your own thinking; bound but not truly held.","Freeing yourself; seeing the bindings were always loose.","Who is trapped here, and is the trap even real?"],
+ ["Dread; sleepless guilt; the worst imagined at three in the morning.","The nightmare fading; help arriving; fear named aloud.","What keeps someone awake here?"],
+ ["Ruin; the final betrayal; the worst of it, finished.","The worst is over; survival; a slow and painful rising.","What ends in ruin here, and who put the last blade in?"],
+ ["Watchfulness; curiosity; someone always listening.","Suspicion; gossip; watching turned to spying.","Who is watching and listening here, and for whom?"],
+ ["Charging in with an idea; blunt haste; direct action.","Reckless words; aggression with no plan behind it.","Who acts on an idea before thinking it through?"],
+ ["Sharp judgment; honesty without comfort; hard-earned clarity.","Cruelty; bitterness; a tongue used to wound.","Which woman here sees clearly and says so, whatever it costs?"],
+ ["Authority through intellect and law; the rule enforced.","Power abused; cold judgment; law used as a weapon.","Which man rules here by law, logic, or sheer intellect?"]
+],
+[
+ ["A material opportunity; a seed of real wealth offered.","A missed chance; a bad investment; a seed left to rot.","What material opportunity appears, and who is offered it?"],
+ ["Juggling resources; balance kept only by constant motion.","Dropping one; overcommitted; the juggling finally fails.","What is being balanced here that cannot be set down?"],
+ ["Skilled collaboration; craft recognized; builders working well.","Shoddy work; discord among those doing the building.","Who is building something here, and how well do they work together?"],
+ ["Holding tight; security through control; nothing let go.","Miserliness — or at last, the hand opening.","What is being held onto too tightly, and by whom?"],
+ ["Hardship; exclusion; out in the cold past the lit window.","Recovery; help found; coming in from the cold.","Who is left out in the cold here, and who could let them in?"],
+ ["Giving and receiving; charity; the scales and the coin.","Strings attached; charity as leverage; an unequal exchange.","Who gives to whom here, and what do they expect in return?"],
+ ["Patient waiting on an investment; the long look at the crop.","Impatience; a poor return; effort spent on bad ground.","What has been planted here that hasn't paid off yet?"],
+ ["Apprenticeship; diligent repetitive work; a craft being learned.","Shoddy work; tedium; skill going nowhere.","What patient work is being done here, and by whom?"],
+ ["Earned independence; comfort in one's own garden.","Dependence; luxury that turned out hollow.","Who has made themselves comfortable here, and how?"],
+ ["Legacy; wealth across generations; the family holding.","A lost inheritance; family conflict over what's owned.","What passes down here — land, money, a name, or a debt?"],
+ ["A student; a new prospect; good news about money or land.","Lack of focus; a prospect that doesn't pan out.","Who is starting out here with something to prove?"],
+ ["Steady reliable labor; unglamorous work done right.","Stagnation; dullness; work with no forward motion.","Who does the steady, unremarkable work that holds this up?"],
+ ["Nurturing abundance; practical care; a productive hand.","Overwork; neglect; care spread far too thin.","Which woman here makes things grow and keeps people fed?"],
+ ["Prosperity; mastery of the material world; the estate.","Greed; stubbornness; wealth that has come to own the man.","Which man here owns, controls, or profits most?"]
+]];
+
+/* Chapter framework */
+var CHAPTERS=[
+ ["The Ground","What's here before anything happens. Establish the shape of things at rest."],
+ ["The Change","Something arrives or shifts. The situation stops being stable."],
+ ["The Pressure","What strains it. Interests collide and the cracks start to show."],
+ ["The Break","The crisis. Something gives way and can't be put back."],
+ ["The Shape","What it settles into, and what it's remembered for."]
 ];
 </script>
 <script>
@@ -547,583 +673,680 @@ LENSES.push(
 );
 </script>
 <script>
-/* ============ STORAGE (falls back to memory if blocked) ============ */
+var FRAMES={
+ wide:"What happens to the land, and to the people living on it?",
+ outfit:"What does this do to the outfit's power, purpose, or people?",
+ face:"What does this say about who they are, or what they've lived through?",
+ town:"What is built, broken, or bought here?",
+ hole:"What area, threat, secret, or treasure does this reveal?",
+ beast:"What does this reveal about how the beast lives — and how people live with it?",
+ job:"What scene, obstacle, or stake does this add?",
+ ways:"What custom, value, or taboo does this describe?",
+ tale:"What does the story say happened — and what really happened?",
+ sign:"What does the phenomenon do, and what do people do about it?",
+ word:"What's being said, who's saying it, and how much of it is true?",
+ rule:"What must you do, or never do — and what happens if you don't?"
+};
+for(var _i=0;_i<LENSES.length;_i++){ if(FRAMES[LENSES[_i].id]) LENSES[_i].frame=FRAMES[LENSES[_i].id]; }
+</script>
+<script>
+/* ============ STORAGE ============ */
 var MEM={};
 var DB={
-  get(k){try{const v=localStorage.getItem(k);return v==null?(MEM[k]??null):v}catch(e){return MEM[k]??null}},
-  set(k,v){try{localStorage.setItem(k,v)}catch(e){}MEM[k]=v},
-  del(k){try{localStorage.removeItem(k)}catch(e){}delete MEM[k]}
+  get:function(k){try{var v=localStorage.getItem(k);return v==null?(MEM[k]!=null?MEM[k]:null):v}catch(e){return MEM[k]!=null?MEM[k]:null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}MEM[k]=v},
+  del:function(k){try{localStorage.removeItem(k)}catch(e){}delete MEM[k]}
 };
-var J=(k,d)=>{const v=DB.get(k);if(!v)return d;try{return JSON.parse(v)}catch(e){return d}};
-var SJ=(k,o)=>DB.set(k,JSON.stringify(o));
+var J=function(k,d){var v=DB.get(k);if(!v)return d;try{return JSON.parse(v)}catch(e){return d}};
+var SJ=function(k,o){DB.set(k,JSON.stringify(o))};
 
 /* ============ CARD MODEL ============ */
-function majorCard(i){return{t:"major",i,west:MAJORS[i][0],trad:MAJORS[i][1],theme:MAJORS[i][2],mean:MAJORS[i][3]}}
-function minorCard(s,r){return{t:"minor",s,r,west:RANKS[r]+" of "+SUITS[s][0],trad:RANKS[r]+" of "+SUITS[s][1],
-  theme:SUITS[s][2],mean:RANKSCALE[r]}}
-function fullDeck(){const d=[];for(let i=0;i<22;i++)d.push(majorCard(i));
-  for(let s=0;s<4;s++)for(let r=0;r<14;r++)d.push(minorCard(s,r));return d}
+function majorCard(i){return{t:"major",i:i,west:MAJORS[i][0],trad:MAJORS[i][1],theme:MAJORS[i][2],
+  up:MAJORS[i][3],rv:MAJORS[i][4]}}
+function minorCard(s,r){return{t:"minor",s:s,r:r,west:RANKS[r]+" of "+SUITS[s][0],trad:RANKS[r]+" of "+SUITS[s][1],
+  up:MINORS[s][r][0],rv:MINORS[s][r][1],q:MINORS[s][r][2]}}
+function fullDeck(){var d=[],i,s,r;for(i=0;i<22;i++)d.push(majorCard(i));
+  for(s=0;s<4;s++)for(r=0;r<14;r++)d.push(minorCard(s,r));return d}
 function cardKey(c){return c.t==="major"?"M"+c.i:"m"+c.s+"-"+c.r}
-function cardLabel(c){return c.west+(c.t==="major"?" ("+c.trad+")":"")}
+function isCourt(c){return c.t==="minor"&&c.r>=10}
 
-/* accept traditional or western names, numerals, shorthand */
-const NUMWORD={1:"Ace",2:"Two",3:"Three",4:"Four",5:"Five",6:"Six",7:"Seven",8:"Eight",9:"Nine",10:"Ten",
+var NUMWORD={1:"Ace",2:"Two",3:"Three",4:"Four",5:"Five",6:"Six",7:"Seven",8:"Eight",9:"Nine",10:"Ten",
   ace:"Ace",one:"Ace",two:"Two",three:"Three",four:"Four",five:"Five",six:"Six",seven:"Seven",eight:"Eight",
   nine:"Nine",ten:"Ten",page:"Page",jack:"Page",knave:"Page",knight:"Knight",queen:"Queen",king:"King"};
 function norm(s){return (s||"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
 function parseCard(raw){
-  let s=norm(raw), rev=false;
-  s=s.replace(/\b(reversed|reverse|rev|inverted|upside down|rx|r)\b\s*$/,()=>{rev=true;return""}).trim();
-  s=s.replace(/^\s*(reversed|rev)\b/,()=>{rev=true;return""}).trim();
+  var s=norm(raw), rev=false, i;
+  s=s.replace(/\b(reversed|reverse|rev|inverted|upside down|rx|r)\b\s*$/,function(){rev=true;return""}).trim();
+  s=s.replace(/^\s*(reversed|rev)\b/,function(){rev=true;return""}).trim();
   if(!s)return null;
-  const bare=s.replace(/^the /,"");
-  for(let i=0;i<22;i++){
-    const w=norm(MAJORS[i][0]).replace(/^the /,""), t=norm(MAJORS[i][1]).replace(/^the /,"");
-    if(bare===w||bare===t||s===norm(MAJORS[i][0])||s===norm(MAJORS[i][1]))return{card:majorCard(i),rev};
+  var bare=s.replace(/^the /,"");
+  for(i=0;i<22;i++){
+    var w=norm(MAJORS[i][0]).replace(/^the /,""), t=norm(MAJORS[i][1]).replace(/^the /,"");
+    if(bare===w||bare===t||s===norm(MAJORS[i][0])||s===norm(MAJORS[i][1]))return{card:majorCard(i),rev:rev};
   }
-  // suit first — match the longest alias at the end of the string
-  const ALIAS=[
+  var ALIAS=[
     [0,["six guns","sixguns","six gun","wands","wand","staves","staffs","rods","batons","clubs"]],
     [1,["springs","spring","cups","cup","chalices","hearts","vessels"]],
     [2,["rails","rail","swords","sword","blades","spades"]],
-    [3,["claims","claim","pentacles","pentacle","coins","coin","disks","discs","coins","diamonds"]]
+    [3,["claims","claim","pentacles","pentacle","coins","coin","disks","discs","diamonds"]]
   ];
-  let si=-1, rest=null;
-  for(const [idx,names] of ALIAS)
-    for(const nm of names){
-      if(s===nm||s.endsWith(" "+nm)){
-        const r=s.slice(0,s.length-nm.length).replace(/\bof\s*$/,"").trim();
-        if(si<0||nm.length>(rest===null?0:0)){si=idx;rest=r}
-      }
-    }
-  if(si>=0&&rest!==null&&rest){
-    const first=rest.split(" ")[0];
-    const rw=NUMWORD[first]||NUMWORD[parseInt(first)]||null;
-    if(rw)return{card:minorCard(si,RANKS.indexOf(rw)),rev};
+  var si=-1,rest=null;
+  for(var a=0;a<ALIAS.length;a++)for(var b=0;b<ALIAS[a][1].length;b++){
+    var nm=ALIAS[a][1][b];
+    if(s===nm||s.endsWith(" "+nm)){si=ALIAS[a][0];rest=s.slice(0,s.length-nm.length).replace(/\bof\s*$/,"").trim()}
+  }
+  if(si>=0&&rest){
+    var first=rest.split(" ")[0];
+    var rw=NUMWORD[first]||NUMWORD[parseInt(first)]||null;
+    if(rw)return{card:minorCard(si,RANKS.indexOf(rw)),rev:rev};
   }
   return null;
 }
 function searchCards(q){
-  const n=norm(q); if(!n)return[];
-  return fullDeck().filter(c=>norm(c.west).includes(n)||norm(c.trad).includes(n)).slice(0,8);
+  var n=norm(q); if(!n)return[];
+  return fullDeck().filter(function(c){return norm(c.west).indexOf(n)>=0||norm(c.trad).indexOf(n)>=0}).slice(0,8);
 }
 
-/* ============ STATE ============ */
-var S=null; // active session
-var K_SESS="lr.session", K_ARCH="lr.archive", K_GRIM="lr.grimoire", K_REG="lr.register", K_LENS="lr.customlenses";
-function allLenses(){return LENSES.concat(J(K_LENS,[]))}
-function lensById(id){return allLenses().find(l=>l.id===id)}
-
-function newSession(lensId,opts){
-  return{id:"s"+Date.now(),lens:lensId,title:opts.title||"",mode:opts.mode,rev:opts.rev,scale:opts.scale,
-    started:new Date().toISOString(),chapter:1,drawn:[],entries:[],pending:null,parent:opts.parent||null};
+/* ============ MEANING & PROMPT ============ */
+function meaningFor(card,rev){
+  var core=rev?card.rv:card.up;
+  if(card.t==="major")return core;
+  return core;
 }
-function save(){if(S)SJ(K_SESS,S)}
-function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.remove("hidden");
-  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2200)}
-function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-
-/* ============ DRAW ============ */
-function remaining(){
-  const used=new Set(S.drawn);
-  return fullDeck().filter(c=>!used.has(cardKey(c)));
+function suitLine(card){
+  return SUITS[card.s][0]+" ("+SUITS[card.s][1]+") — "+SUITS[card.s][2]+".";
 }
-function drawRandom(majorsOnly){
-  let pool=remaining();
-  if(majorsOnly)pool=pool.filter(c=>c.t==="major");
-  if(!pool.length)return null;
-  const c=pool[Math.floor(Math.random()*pool.length)];
-  const rev=S.rev?Math.random()<0.5:false;
-  return{card:c,rev};
+function scaleFor(card){
+  if(card.t==="major")return "Big Sky. This sets the chapter's large question.";
+  if(card.r>=10)return "Court card. Someone enters. Give them a name.";
+  if(card.r<=2)return "Small — a detail, a rumor, background color.";
+  if(card.r<=6)return "Middling — a real complication that changes something already on the page.";
+  return "Large — a crisis that forces a hard choice or a loss.";
 }
 function promptFor(card,lens){
   if(card.t==="major"){
-    const ov=J("lr.override."+lens.id,{});
+    var ov=J("lr.override."+lens.id,{});
     return ov[card.i]||lens.p[card.i];
   }
-  const suit=lens.suits[card.s], scale=RANKSCALE[card.r];
-  if(card.r>=10) return lens.courts[card.r-10]+" — enters through "+SUITS[card.s][0].toLowerCase()+". Who are they, and what do they want?";
-  return "["+SUITS[card.s][0]+"] "+suit+". "+scale;
+  var domain=lens.suits[card.s];
+  if(card.r>=10) return card.q+" In this lens: "+lens.courts[card.r-10]+".";
+  return card.q+" Read it through "+domain.toLowerCase()+".";
 }
-function meaningFor(card,rev){
-  if(card.t==="major"){
-    const parts=card.mean.split("Reversed:");
-    return rev?("Reversed — "+(parts[1]||"the card's meaning, blocked, twisted, or false.").trim()):parts[0].trim();
-  }
-  return SUITS[card.s][0]+" ("+SUITS[card.s][1]+"): "+card.theme+". "+card.mean+
-    (rev?" Reversed: it fails, backfires, or is not what it appears.":"");
+/* short auto-title suggestion */
+function suggestTitle(card,rev){
+  if(card.t==="major")return card.west;
+  return card.west;
 }
 </script>
 <script>
-var app=()=>document.getElementById("app");
-var VIEW="home";
+var K_SESS="lr.session", K_ARCH="lr.archive", K_GRIM="lr.grimoire", K_REG="lr.register", K_LENS="lr.customlenses";
+var S=null, ZOOM=null, SUG=[], SUGI=-1, BRIEF=false;
+var app=function(){return document.getElementById("app")};
 function setMeta(t){document.getElementById("topmeta").textContent=t||""}
+function allLenses(){return LENSES.concat(J(K_LENS,[]))}
+function lensById(id){var a=allLenses(),i;for(i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null}
+function save(){if(S)SJ(K_SESS,S)}
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.remove("hidden");
+  clearTimeout(t._h);t._h=setTimeout(function(){t.classList.add("hidden")},2200)}
+function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function newSession(lensId,o){
+  return{id:"s"+Date.now(),lens:lensId,title:o.title||"",mode:o.mode,rev:o.rev,scale:o.scale,
+    started:new Date().toISOString(),chapter:1,drawn:[],entries:[],pending:null}
+}
+function remaining(){var u={};S.drawn.forEach(function(k){u[k]=1});
+  return fullDeck().filter(function(c){return !u[cardKey(c)]})}
+function drawRandom(majorsOnly){
+  var pool=remaining();
+  if(majorsOnly)pool=pool.filter(function(c){return c.t==="major"});
+  if(!pool.length)return null;
+  var c=pool[Math.floor(Math.random()*pool.length)];
+  return{card:c,rev:S.rev?Math.random()<0.5:false};
+}
+function autogrow(el){if(!el)return;el.style.height="auto";el.style.height=Math.max(el.scrollHeight+4,160)+"px"}
+function bindGrow(id){var e=document.getElementById(id);if(!e)return;autogrow(e);e.oninput=function(){autogrow(e)}}
 
-/* ---------- HOME / LENS PICKER ---------- */
+/* ---------- HOME ---------- */
 function renderHome(){
-  VIEW="home"; setMeta("");
-  const resume=J(K_SESS,null);
-  const arch=J(K_ARCH,[]);
-  let h=`<h1>Pick a lens.</h1>
-  <p class="lede">One deck, one engine. The lens decides what you're building and how every card is read.
-  Choose a scope, and the app tells you which cards to use and what each one is asking.</p>`;
-  if(resume){const l=lensById(resume.lens);
-    h+=`<div class="deckbox"><h4>Session in progress</h4>
-    <p class="small dim" style="margin:0 0 12px">${esc(resume.title||"Untitled")} — ${esc(l?l.name:resume.lens)},
-    chapter ${resume.chapter}, ${resume.entries.length} card${resume.entries.length===1?"":"s"} logged.</p>
-    <div class="row"><button class="btn primary" onclick="resumeSession()">Resume</button>
-    <button class="btn" onclick="finishSession()">Finish and log it</button>
-    <button class="btn ghost" onclick="if(confirm('Discard this session?')){DB.del(K_SESS);renderHome()}">Discard</button></div></div>`;}
-  h+=`<div class="lens-grid">`+allLenses().map(l=>
-    `<button class="lens" onclick="renderSetup('${l.id}')">
-      <div class="ln">${esc(l.name)}</div><div class="lscope">${esc(l.scope)}</div>
-      <div class="ldesc">${esc(l.desc)}</div></button>`).join("")+`</div>
-  <div class="row" style="margin-top:26px">
-    <button class="btn" onclick="renderRegister()">Register${regCount()?" ("+regCount()+")":""}</button>
-    <button class="btn" onclick="renderGrimoire()">Grimoire</button>
-    <button class="btn" onclick="renderArchive()">Past sessions${arch.length?" ("+arch.length+")":""}</button>
-    <button class="btn" onclick="renderLensBuilder()">Build a lens</button>
-  </div>`;
+  setMeta("");
+  var resume=J(K_SESS,null), arch=J(K_ARCH,[]);
+  var h='<h1>Pick a lens.</h1><p class="lede">One deck, one engine. The lens decides what you\'re building and how every card is read.</p>';
+  if(resume){var l=lensById(resume.lens);
+    h+='<div class="deckbox"><h4>Session in progress</h4><p class="small dim" style="margin:0 0 12px">'+
+    esc(resume.title||"Untitled")+' — '+esc(l?l.name:resume.lens)+', chapter '+resume.chapter+', '+
+    resume.entries.length+' card'+(resume.entries.length===1?"":"s")+' logged.</p><div class="row">'+
+    '<button class="btn primary" onclick="resumeSession()">Resume</button>'+
+    '<button class="btn" onclick="resumeSession(1)">Finish and log it</button>'+
+    '<button class="btn ghost" onclick="discardSession()">Discard</button></div></div>';}
+  h+='<div class="lens-grid">'+allLenses().map(function(l){
+    return '<button class="lens" onclick="renderSetup(\''+l.id+'\')"><div class="ln">'+esc(l.name)+
+    '</div><div class="lscope">'+esc(l.scope)+'</div><div class="ldesc">'+esc(l.desc)+'</div></button>'}).join("")+'</div>';
+  h+='<div class="row" style="margin-top:26px">'+
+    '<button class="btn" onclick="renderRegister()">Register'+(J(K_REG,[]).length?" ("+J(K_REG,[]).length+")":"")+'</button>'+
+    '<button class="btn" onclick="renderGrimoire()">Grimoire</button>'+
+    '<button class="btn" onclick="renderArchive()">Past sessions'+(arch.length?" ("+arch.length+")":"")+'</button>'+
+    '<button class="btn" onclick="renderLensBuilder()">Build a lens</button></div>';
   app().innerHTML=h;
 }
+function discardSession(){if(confirm("Discard the session in progress? This cannot be undone.")){DB.del(K_SESS);S=null;renderHome()}}
+function resumeSession(fin){S=J(K_SESS,null);if(!S)return renderHome();if(fin)finishSession();else renderPlay()}
 
 /* ---------- SETUP ---------- */
-function renderSetup(id,parent){
-  const l=lensById(id); if(!l)return renderHome();
+function renderSetup(id){
+  var l=lensById(id); if(!l)return renderHome();
   setMeta(l.name);
-  app().innerHTML=`<button class="btn ghost" onclick="renderHome()">← All lenses</button>
-  <h1>${esc(l.name)}</h1>
-  <p class="lede">${esc(l.desc)}</p>
-  <p class="small dim"><b>You'll end up with:</b> ${esc(l.artifact)}</p>
-  <div class="deckbox"><h4>Which deck to use</h4><ul>${l.deck.map(d=>"<li>"+esc(d)+"</li>").join("")}</ul></div>
-  <h3>Session</h3>
-  <label class="fld" for="ttl">Name it (optional)</label>
-  <input type="text" id="ttl" placeholder="e.g. The Pit, or Baron Vance, or Wolf Creek">
-  <div style="height:16px"></div>
-  <label class="fld">How do you draw?</label>
-  <div class="row" id="modeRow">
-    <button class="btn" data-v="random" onclick="pick('modeRow',this)">The app draws for me</button>
-    <button class="btn primary" data-v="physical" onclick="pick('modeRow',this)">I'll type my own cards</button>
-  </div>
-  <div style="height:16px"></div>
-  <label class="fld">Reversed cards</label>
-  <div class="row" id="revRow">
-    <button class="btn primary" data-v="1" onclick="pick('revRow',this)">Use reversals</button>
-    <button class="btn" data-v="0" onclick="pick('revRow',this)">Upright only</button>
-  </div>
-  <div style="height:16px"></div>
-  <label class="fld">How long?</label>
-  <div class="row" id="sclRow">
-    <button class="btn" data-v="quick" onclick="pick('sclRow',this)">Quick draw — ${l.quick.map(esc).join(" / ")}</button>
-    <button class="btn primary" data-v="short" onclick="pick('sclRow',this)">Short ride — one chapter</button>
-    <button class="btn" data-v="full" onclick="pick('sclRow',this)">Full ride — five chapters</button>
-  </div>
-  <hr class="rule">
-  <button class="btn primary" onclick="startSession('${l.id}',${parent?("'"+parent+"'"):"null"})">Start the session</button>`;
+  app().innerHTML='<button class="btn ghost" onclick="renderHome()">← All lenses</button>'+
+  '<h1>'+esc(l.name)+'</h1><p class="lede">'+esc(l.desc)+'</p>'+
+  lensBriefHTML(l,true)+
+  '<h3>Set up the session</h3>'+
+  '<label class="fld" for="ttl">Name this session</label>'+
+  '<input type="text" id="ttl" placeholder="e.g. The Pit, Baron Vance, Wolf Creek">'+
+  '<p class="small dim" style="margin:6px 0 0">You can rename it any time.</p><div style="height:18px"></div>'+
+  '<label class="fld">How do you draw?</label><div class="row" id="modeRow">'+
+  '<button class="btn" data-v="random" onclick="pick(\'modeRow\',this)">The app draws</button>'+
+  '<button class="btn primary" data-v="physical" onclick="pick(\'modeRow\',this)">I type my own cards</button></div>'+
+  '<div style="height:18px"></div><label class="fld">Reversed cards</label><div class="row" id="revRow">'+
+  '<button class="btn primary" data-v="1" onclick="pick(\'revRow\',this)">Use reversals</button>'+
+  '<button class="btn" data-v="0" onclick="pick(\'revRow\',this)">Upright only</button></div>'+
+  '<div style="height:18px"></div><label class="fld">How long?</label>'+
+  '<div class="scale-opts" id="sclRow">'+
+  '<button class="scale-opt" data-v="quick" onclick="pick2(\'sclRow\',this)"><b>Quick draw</b>'+
+    '<span>Three cards: '+l.quick.map(esc).join(" · ")+'</span></button>'+
+  '<button class="scale-opt sel" data-v="short" onclick="pick2(\'sclRow\',this)"><b>Short ride</b>'+
+    '<span>One chapter. Draw until the story of it feels told — usually four to eight cards.</span></button>'+
+  '<button class="scale-opt" data-v="full" onclick="pick2(\'sclRow\',this)"><b>Full ride</b>'+
+    '<span>Five chapters, following the arc below. The long version.</span></button></div>'+
+  '<div class="deckbox" style="margin-top:20px"><h4>The five-chapter arc</h4>'+
+  CHAPTERS.map(function(c,i){return '<div class="arcrow"><span class="arcnum">'+(i+1)+'</span><div>'+
+    '<b>'+esc(c[0])+'</b><br><span class="small dim">'+esc(c[1])+'</span></div></div>'}).join("")+'</div>'+
+  '<hr class="rule"><button class="btn primary" onclick="startSession(\''+l.id+'\')">Start the session</button>';
 }
-function pick(rowId,btn){document.querySelectorAll("#"+rowId+" .btn").forEach(b=>b.classList.remove("primary"));btn.classList.add("primary")}
-function picked(rowId){const b=document.querySelector("#"+rowId+" .btn.primary");return b?b.dataset.v:null}
-
-function startSession(id,parent){
+function pick(rowId,btn){var n=document.querySelectorAll("#"+rowId+" .btn");
+  for(var i=0;i<n.length;i++)n[i].classList.remove("primary");btn.classList.add("primary")}
+function picked(rowId){var b=document.querySelector("#"+rowId+" .btn.primary");return b?b.dataset.v:null}
+function pick2(rowId,btn){var n=document.querySelectorAll("#"+rowId+" .scale-opt");
+  for(var i=0;i<n.length;i++)n[i].classList.remove("sel");btn.classList.add("sel")}
+function picked2(rowId){var b=document.querySelector("#"+rowId+" .scale-opt.sel");return b?b.dataset.v:"short"}
+function startSession(id){
   S=newSession(id,{title:document.getElementById("ttl").value.trim(),mode:picked("modeRow"),
-    rev:picked("revRow")==="1",scale:picked("sclRow"),parent:parent});
+    rev:picked("revRow")==="1",scale:picked2("sclRow")});
   save(); renderPlay();
 }
-function resumeSession(){S=J(K_SESS,null);S?renderPlay():renderHome()}
+
+/* ---------- LENS BRIEF ---------- */
+function lensBriefHTML(l,open){
+  return '<div class="brief'+(open?"":" closed")+'" id="briefBox">'+
+  '<div class="brief-h"><b>How '+esc(l.name)+' works</b>'+
+  (open?'':'<button class="btn sm ghost" onclick="BRIEF=!BRIEF;renderPlay()">Hide</button>')+'</div>'+
+  '<p class="small"><span class="klbl">You end up with</span> '+esc(l.artifact)+'</p>'+
+  '<p class="small"><span class="klbl">Every card answers</span> '+esc(l.frame||"What does this reveal?")+'</p>'+
+  '<div class="suitgrid">'+l.suits.map(function(s,i){
+    return '<div class="suitcell"><b>'+esc(SUITS[i][0])+'</b><span class="dim"> / '+esc(SUITS[i][1])+'</span><br>'+
+    '<span class="small dim">'+esc(s)+'</span></div>'}).join("")+'</div>'+
+  '<div class="suitgrid">'+l.courts.map(function(c,i){
+    return '<div class="suitcell"><b>'+["Page","Knight","Queen","King"][i]+'</b><br><span class="small dim">'+esc(c)+'</span></div>'}).join("")+'</div>'+
+  '<p class="small klbl" style="margin:12px 0 4px">Which deck to use</p><ul class="brieful">'+
+  l.deck.map(function(d){return "<li>"+esc(d)+"</li>"}).join("")+'</ul></div>';
+}
 
 /* ---------- PLAY ---------- */
-function chapterTarget(){return S.scale==="quick"?3:(S.scale==="short"?8:40)}
 function renderPlay(){
-  VIEW="play";
-  const l=lensById(S.lens); setMeta(l.name+(S.title?" · "+S.title:""));
-  const n=S.entries.length, q=S.scale==="quick";
-  let h=`<div class="chapline">
-    <span><b>${esc(l.name)}</b></span>
-    ${S.title?`<span>${esc(S.title)}</span>`:""}
-    ${q?`<span>Quick draw · ${n}/3</span>`:`<span>Chapter <b>${S.chapter}</b></span><span>${n} card${n===1?"":"s"} logged</span>`}
-    <span>${S.mode==="random"?"App draws":"You type"}${S.rev?" · reversals on":""}</span>
-    <span class="dim">${remaining().length} left in deck</span>
-  </div>`;
+  var l=lensById(S.lens); setMeta(l.name);
+  var n=S.entries.length, q=S.scale==="quick";
+  var h='<div class="sesshead">'+
+    '<div class="sesstitle" onclick="renameSession()">'+esc(S.title||"Untitled session")+
+    ' <span class="pencil">edit</span></div>'+
+    '<div class="sessmeta">'+esc(l.name)+' · '+esc(l.scope)+' · '+
+    (S.mode==="random"?"app draws":"you type")+(S.rev?" · reversals on":"")+'</div></div>';
 
-  if(q&&n<3) h+=`<p class="small dim" style="margin-top:12px">Position ${n+1}: <b>${esc(l.quick[n])}</b></p>`;
-
-  if(S.pending){ h+=cardStageHTML(S.pending,l); }
-  else if(q&&n>=3){ h+=`<h2>That's the spread.</h2><p class="lede">Three cards, three answers. Close it out and take the log.</p>`; }
-  else { h+=drawControlsHTML(l); }
-
-  if(S.entries.length){
-    h+=`<hr class="rule"><h2>This session</h2>`+S.entries.map((e,i)=>entryHTML(e,i)).join("");
+  /* framework strip */
+  if(q){
+    h+='<div class="frame"><div class="frame-h">Quick draw — three positions</div><div class="steps">'+
+      l.quick.map(function(p,i){return '<div class="step'+(i<n?" done":(i===n?" now":""))+'">'+
+      '<span class="sn">'+(i+1)+'</span><span>'+esc(p)+'</span></div>'}).join("")+'</div></div>';
+  } else if(S.scale==="full"){
+    h+='<div class="frame"><div class="frame-h">Chapter '+S.chapter+' of 5 — '+esc(CHAPTERS[S.chapter-1][0])+'</div>'+
+      '<div class="steps">'+CHAPTERS.map(function(c,i){return '<div class="step'+(i+1<S.chapter?" done":(i+1===S.chapter?" now":""))+'">'+
+      '<span class="sn">'+(i+1)+'</span><span>'+esc(c[0])+'</span></div>'}).join("")+'</div>'+
+      '<p class="small dim" style="margin:10px 0 0">'+esc(CHAPTERS[S.chapter-1][1])+'</p>'+
+      '<p class="small dim" style="margin:6px 0 0">Open the chapter with a Big Sky card, then fill it in with Frontier cards until it feels told. '+n+' logged so far.</p></div>';
+  } else {
+    h+='<div class="frame"><div class="frame-h">Short ride — one chapter</div>'+
+      '<p class="small dim" style="margin:0">Open with a Big Sky card for the large question, then draw Frontier cards for detail. Four to eight cards is a full chapter. '+n+' logged so far.</p></div>';
   }
-  h+=`<hr class="rule"><div class="row spread">
-    <div class="row">
-      ${(!q&&S.scale!=="quick")?`<button class="btn" onclick="nextChapter()">End chapter ${S.chapter}</button>`:""}
-      <button class="btn" onclick="renderRegister()">Register</button>
-    </div>
-    <div class="row">
-      <button class="btn primary" onclick="finishSession()">Finish &amp; generate log</button>
-      <button class="btn ghost" onclick="renderHome()">Pause</button>
-    </div></div>`;
+
+  h+='<div class="row" style="margin:14px 0"><button class="btn sm ghost" onclick="BRIEF=!BRIEF;renderPlay()">'+
+    (BRIEF?"Hide":"Show")+' how '+esc(l.name)+' works</button></div>';
+  if(BRIEF)h+=lensBriefHTML(l,false);
+
+  if(S.pending) h+=cardStageHTML(S.pending,l);
+  else if(q&&n>=3) h+='<div class="frame"><div class="frame-h">That\'s the spread</div>'+
+    '<p class="small dim" style="margin:0">Three cards, three answers. Finish below and take the log.</p></div>';
+  else h+=drawControlsHTML();
+
+  if(S.entries.length) h+='<hr class="rule"><h2>This session</h2>'+
+    S.entries.map(function(e,i){return entryHTML(e,i,true)}).join("");
+
+  h+='<hr class="rule"><div class="row spread">'+
+    '<div class="row">'+(S.scale==="full"&&S.chapter<5?'<button class="btn" onclick="nextChapter()">End chapter '+S.chapter+'</button>':"")+
+    '<button class="btn" onclick="renderRegister()">Register</button></div>'+
+    '<div class="row"><button class="btn primary" onclick="finishSession()">Finish &amp; log</button>'+
+    '<button class="btn ghost" onclick="renderHome()">Pause</button></div></div>';
   app().innerHTML=h;
-  const inp=document.getElementById("cardin"); if(inp){inp.focus();inp.oninput=onCardInput;inp.onkeydown=onCardKey}
+  bindGrow("interp");
+  var inp=document.getElementById("cardin");
+  if(inp){inp.oninput=onCardInput;inp.onkeydown=onCardKey}
 }
-function drawControlsHTML(l){
-  const majorsOnly=(S.scale!=="quick"&&S.entries.length===0)||false;
-  if(S.mode==="random"){
-    return `<div class="row" style="margin:24px 0">
-      <button class="btn primary" onclick="doDraw(false)">Draw a card</button>
-      <button class="btn" onclick="doDraw(true)">Draw a Big Sky card</button>
-    </div>
-    <p class="small dim">Big Sky cards are the 22 Major Arcana — they open chapters and ask the large questions.</p>`;
-  }
-  return `<div style="margin:24px 0">
-    <label class="fld" for="cardin">Type the card you drew</label>
-    <input type="text" id="cardin" autocomplete="off" autocapitalize="off" spellcheck="false"
-      placeholder="e.g. Three of Cups reversed — or The Fool, 7 of Wands, Knight of Springs">
-    <div id="sugg" class="suggest hidden"></div>
-    <p class="small dim" style="margin-top:8px">Traditional or Western names both work. Add “reversed” or “rev” at the end for an inverted card.</p>
-  </div>`;
+function renameSession(){
+  var t=prompt("Name this session:",S.title||"");
+  if(t!==null){S.title=t.trim();save();renderPlay()}
+}
+function drawControlsHTML(){
+  if(S.mode==="random")
+    return '<div class="row" style="margin:22px 0"><button class="btn primary" onclick="doDraw(false)">Draw a card</button>'+
+      '<button class="btn" onclick="doDraw(true)">Draw a Big Sky card</button></div>'+
+      '<p class="small dim">Big Sky cards are the 22 Major Arcana — they open chapters and ask the large questions. '+
+      remaining().length+' cards left in the deck.</p>';
+  return '<div style="margin:22px 0"><label class="fld" for="cardin">Type the card you drew</label>'+
+    '<input type="text" id="cardin" autocomplete="off" autocapitalize="off" spellcheck="false" '+
+    'placeholder="Three of Cups reversed — or The Fool, 7 of Wands, Knight of Springs">'+
+    '<div id="sugg" class="suggest hidden"></div>'+
+    '<p class="small dim" style="margin-top:8px">Traditional or Western names both work. Add “reversed” or “rev” for an inverted card.</p></div>';
 }
 var SUG=[],SUGI=-1;
 function onCardInput(e){
-  const v=e.target.value, box=document.getElementById("sugg");
-  const p=parseCard(v);
+  var v=e.target.value, box=document.getElementById("sugg");
+  var p=parseCard(v);
   SUG=searchCards(v.replace(/\b(reversed|rev|r)\b\s*$/i,"")); SUGI=-1;
-  if(p&&SUG.length<=1){box.classList.add("hidden");return}
-  if(!SUG.length){box.classList.add("hidden");return}
+  if((p&&SUG.length<=1)||!SUG.length){box.classList.add("hidden");return}
   box.classList.remove("hidden");
-  box.innerHTML=SUG.map((c,i)=>`<button onclick="chooseSug(${i})">${esc(c.west)} <span class="dim">· ${esc(c.trad)}</span></button>`).join("");
+  box.innerHTML=SUG.map(function(c,i){return '<button onclick="chooseSug('+i+')">'+esc(c.west)+
+    ' <span class="dim">· '+esc(c.trad)+'</span></button>'}).join("");
 }
 function chooseSug(i){
-  const inp=document.getElementById("cardin");
-  const rev=/\b(reversed|rev)\b/i.test(inp.value);
+  var inp=document.getElementById("cardin");
+  var rev=/\b(reversed|rev)\b/i.test(inp.value);
   inp.value=SUG[i].west+(rev?" reversed":"");
   document.getElementById("sugg").classList.add("hidden"); submitCard();
 }
 function onCardKey(e){
-  const box=document.getElementById("sugg");
+  var box=document.getElementById("sugg");
   if(e.key==="ArrowDown"||e.key==="ArrowUp"){
     if(!SUG.length)return; e.preventDefault();
     SUGI=(SUGI+(e.key==="ArrowDown"?1:SUG.length-1))%SUG.length;
-    [...box.children].forEach((b,i)=>b.classList.toggle("sel",i===SUGI));
-  } else if(e.key==="Enter"){ e.preventDefault(); if(SUGI>=0)chooseSug(SUGI); else submitCard(); }
+    var ch=box.children;for(var i=0;i<ch.length;i++)ch[i].classList.toggle("sel",i===SUGI);
+  } else if(e.key==="Enter"){e.preventDefault(); if(SUGI>=0)chooseSug(SUGI); else submitCard()}
 }
 function submitCard(){
-  const inp=document.getElementById("cardin"); const p=parseCard(inp.value);
+  var inp=document.getElementById("cardin"), p=parseCard(inp.value);
   if(!p){toast("Didn't catch that card. Try “Three of Cups” or “The Tower”.");return}
   if(!S.rev)p.rev=false;
-  if(S.drawn.includes(cardKey(p.card))&&!confirm(cardLabel(p.card)+" is already in this session. Log it again?"))return;
-  S.pending={key:cardKey(p.card),card:p.card,rev:p.rev,text:""}; save(); renderPlay();
+  if(S.drawn.indexOf(cardKey(p.card))>=0&&!confirm(p.card.west+" is already in this session. Log it again?"))return;
+  S.pending={key:cardKey(p.card),card:p.card,rev:p.rev,text:"",title:""}; save(); renderPlay();
 }
-function doDraw(majorsOnly){
-  const d=drawRandom(majorsOnly);
-  if(!d){toast(majorsOnly?"No Big Sky cards left.":"The deck is spent.");return}
-  S.pending={key:cardKey(d.card),card:d.card,rev:d.rev,text:""}; save(); renderPlay();
+function doDraw(mo){
+  var d=drawRandom(mo);
+  if(!d){toast(mo?"No Big Sky cards left.":"The deck is spent.");return}
+  S.pending={key:cardKey(d.card),card:d.card,rev:d.rev,text:"",title:""}; save(); renderPlay();
 }
-function cardStageHTML(pend,l){
-  const c=pend.card, isCourt=(c.t==="minor"&&c.r>=10);
-  return `<div class="card-stage${pend.rev?" rev":""}">
-    <div class="card-arcana">${c.t==="major"?"Big Sky · Major Arcana "+c.i:"Frontier · "+SUITS[c.s][1]}</div>
-    <div class="card-name">${esc(c.west)}</div>
-    <div class="card-trad">${esc(c.trad)}</div>
-    <div class="card-orient">${pend.rev?"Reversed":"Upright"}</div>
-    <div class="meaning">
-      <div class="lbl">What this lens is asking</div>
-      <p class="prompt">${esc(promptFor(c,l))}</p>
-      <div class="lbl">General meaning, as a reminder</div>
-      <p class="reminder">${esc(meaningFor(c,pend.rev))}</p>
-      ${c.t==="major"?`<p class="reminder"><span class="dim">Theme:</span> ${esc(c.theme)}</p>`:""}
-    </div>
-    <div style="height:18px"></div>
-    <label class="fld" for="interp">Your interpretation${isCourt?" — name them":""}</label>
-    <textarea id="interp" placeholder="${isCourt?"Give this person a name, then write who they are.":"Write what this means in your world."}">${esc(pend.text)}</textarea>
-    ${isCourt?`<div style="height:12px"></div><label class="fld" for="nm">Name for the register</label>
-      <input type="text" id="nm" placeholder="Their name">`:""}
-    <div style="height:14px"></div>
-    <div class="row">
-      <button class="btn primary" onclick="commitEntry()">Log it${prevGrim(pend.key)?"":""}</button>
-      <button class="btn" onclick="S.pending=null;save();renderPlay()">Discard this card</button>
-    </div>
-    ${prevGrim(pend.key)}
-  </div>`;
+function cardStageHTML(p,l){
+  var c=p.card, court=isCourt(c);
+  return '<div class="card-stage'+(p.rev?" rev":"")+'">'+
+  '<div class="card-arcana">'+(c.t==="major"?"Big Sky · Major Arcana "+c.i:"Frontier · "+SUITS[c.s][1])+
+    ' · '+(p.rev?"Reversed":"Upright")+'</div>'+
+  '<div class="card-name">'+esc(c.west)+'</div><div class="card-trad">'+esc(c.trad)+'</div>'+
+  '<div class="meaning">'+
+    '<div class="klbl">What this lens is asking</div><p class="prompt">'+esc(promptFor(c,l))+'</p>'+
+    '<div class="klbl">This card, '+(p.rev?"reversed":"upright")+'</div><p class="reminder">'+esc(meaningFor(c,p.rev))+'</p>'+
+    (c.t==="minor"?'<p class="reminder small dim">'+esc(suitLine(c))+'</p>':
+      '<p class="reminder small dim">Theme: '+esc(c.theme)+'</p>')+
+    '<p class="reminder small dim">'+esc(scaleFor(c))+'</p>'+
+  '</div><div style="height:20px"></div>'+
+  '<label class="fld" for="ttlin">Title — a short label you\'ll recognise later</label>'+
+  '<input type="text" id="ttlin" placeholder="'+esc(court?"Their name":suggestTitle(c,p.rev))+'" value="'+esc(p.title)+'">'+
+  '<div style="height:14px"></div>'+
+  '<label class="fld" for="interp">Your interpretation</label>'+
+  '<textarea id="interp" placeholder="'+(court?"Name them, then write who they are.":"Write what this means in your world.")+'">'+esc(p.text)+'</textarea>'+
+  '<div class="row" style="margin-top:14px"><button class="btn primary" onclick="commitEntry()">Log this card</button>'+
+  '<button class="btn ghost" onclick="S.pending=null;save();renderPlay()">Discard it</button></div>'+
+  prevGrim(p.key)+'</div>';
 }
 function prevGrim(key){
-  const g=J(K_GRIM,{})[key]||[];
+  var g=J(K_GRIM,{})[key]||[];
   if(!g.length)return "";
-  return `<div style="margin-top:18px;border-top:1px solid var(--rule);padding-top:12px">
-    <div class="lbl small dim">You've read this card before</div>`+
-    g.slice(-3).map(x=>`<p class="small dim" style="margin:6px 0"><b>${esc(x.lens)}</b> — ${esc(x.text.slice(0,180))}${x.text.length>180?"…":""}</p>`).join("")+`</div>`;
+  return '<div style="margin-top:20px;border-top:1px solid var(--rule);padding-top:12px">'+
+  '<div class="klbl">You\'ve read this card before</div>'+
+  g.slice(-3).map(function(x){return '<p class="small dim" style="margin:6px 0"><b>'+esc(x.lens)+'</b> — '+
+    esc(x.text.slice(0,180))+(x.text.length>180?"…":"")+'</p>'}).join("")+'</div>';
 }
 function commitEntry(){
-  const t=document.getElementById("interp").value.trim();
-  const nmEl=document.getElementById("nm"); const nm=nmEl?nmEl.value.trim():"";
+  var t=document.getElementById("interp").value.trim();
+  var ti=document.getElementById("ttlin").value.trim();
   if(!t){toast("Write something first — even one line.");return}
-  const l=lensById(S.lens);
-  const e={key:S.pending.key,card:S.pending.card,rev:S.pending.rev,text:t,name:nm,
-    chapter:S.chapter,at:new Date().toISOString(),prompt:promptFor(S.pending.card,l),staked:!!nm,nested:[]};
-  S.entries.push(e); S.drawn.push(S.pending.key); S.pending=null;
-  const g=J(K_GRIM,{}); (g[e.key]=g[e.key]||[]).push({lens:l.name,text:t,at:e.at}); SJ(K_GRIM,g);
-  if(nm){const r=J(K_REG,[]);r.push({name:nm,lens:l.name,session:S.title||"Untitled",note:t.slice(0,240),at:e.at});SJ(K_REG,r)}
+  var l=lensById(S.lens), p=S.pending;
+  var e={key:p.key,card:p.card,rev:p.rev,text:t,title:ti||suggestTitle(p.card,p.rev),
+    name:isCourt(p.card)?ti:"",chapter:S.chapter,at:new Date().toISOString(),
+    prompt:promptFor(p.card,l),nested:[]};
+  S.entries.push(e); S.drawn.push(p.key); S.pending=null;
+  var g=J(K_GRIM,{}); (g[e.key]=g[e.key]||[]).push({lens:l.name,text:t,at:e.at}); SJ(K_GRIM,g);
+  if(e.name){var r=J(K_REG,[]);r.push({name:e.name,lens:l.name,session:S.title||"Untitled",note:t.slice(0,240),at:e.at});SJ(K_REG,r)}
   save(); renderPlay();
 }
-function entryHTML(e,i){
-  return `<div class="entry${e.rev?" rev":""}">
-    <div class="ehead">${esc(e.card.west)}${e.rev?" — reversed":""}${e.name?" · "+esc(e.name):""}</div>
-    <div class="emeta">${esc(e.card.trad)} · chapter ${e.chapter}</div>
-    <div class="eprompt">${esc(e.prompt)}</div>
-    <div class="etext">${esc(e.text)}</div>
-    <div class="row noprint" style="margin-top:8px">
-      <button class="btn sm ghost" onclick="stakeZoom(${i})">Zoom into this</button>
-      <button class="btn sm ghost" onclick="editEntry(${i})">Edit</button>
-    </div>
-    ${(e.nested||[]).map(n=>`<div class="entry nested"><div class="ehead">${esc(n.title)}</div>
-      <div class="emeta">${esc(n.lens)} · quick draw</div><div class="etext">${esc(n.text)}</div></div>`).join("")}
-  </div>`;
+function entryHTML(e,i,live){
+  return '<div class="entry'+(e.rev?" rev":"")+'" id="e'+i+'">'+
+  '<div class="ehead">'+esc(e.title||e.card.west)+'</div>'+
+  '<div class="emeta">'+esc(e.card.west)+' · '+esc(e.card.trad)+' · '+(e.rev?"reversed":"upright")+
+    (e.chapter&&S&&S.scale==="full"?' · chapter '+e.chapter:'')+'</div>'+
+  '<div class="eprompt">'+esc(e.prompt)+'</div>'+
+  '<div class="etext">'+esc(e.text)+'</div>'+
+  (live?'<div class="row noprint" style="margin-top:10px">'+
+    '<button class="btn sm ghost" onclick="editEntry('+i+')">Edit</button>'+
+    '<button class="btn sm ghost" onclick="stakeZoom('+i+')">Zoom in</button>'+
+    '<button class="btn sm ghost" onclick="delEntry('+i+')">Delete</button></div>':'')+
+  (e.nested||[]).map(function(n,k){return '<div class="entry nested">'+
+    '<div class="ehead">'+esc(n.title)+'</div><div class="emeta">'+esc(n.lens)+' · '+esc(n.card||"")+'</div>'+
+    '<div class="etext">'+esc(n.text)+'</div>'+
+    (live?'<div class="row noprint" style="margin-top:8px"><button class="btn sm ghost" onclick="editNested('+i+','+k+')">Edit</button>'+
+      '<button class="btn sm ghost" onclick="delNested('+i+','+k+')">Delete</button></div>':'')+'</div>'}).join("")+
+  '</div>';
 }
 function editEntry(i){
-  const e=S.entries[i]; const t=prompt("Edit your interpretation:",e.text);
-  if(t!==null&&t.trim()){e.text=t.trim();save();renderPlay()}
+  var e=S.entries[i];
+  app().innerHTML='<button class="btn ghost" onclick="renderPlay()">← Back to the session</button>'+
+  '<h1>Edit</h1><div class="card-stage'+(e.rev?" rev":"")+'">'+
+  '<div class="card-arcana">'+esc(e.card.trad)+' · '+(e.rev?"Reversed":"Upright")+'</div>'+
+  '<div class="card-name">'+esc(e.card.west)+'</div>'+
+  '<div class="meaning"><p class="prompt">'+esc(e.prompt)+'</p>'+
+  '<p class="reminder">'+esc(meaningFor(e.card,e.rev))+'</p></div>'+
+  '<div style="height:18px"></div><label class="fld" for="etitle">Title</label>'+
+  '<input type="text" id="etitle" value="'+esc(e.title||"")+'">'+
+  '<div style="height:14px"></div><label class="fld" for="etext">Your interpretation</label>'+
+  '<textarea id="etext">'+esc(e.text)+'</textarea>'+
+  '<div class="row" style="margin-top:14px"><button class="btn primary" onclick="saveEntry('+i+')">Save changes</button>'+
+  '<button class="btn ghost" onclick="renderPlay()">Cancel</button></div></div>';
+  bindGrow("etext");
+}
+function saveEntry(i){
+  var e=S.entries[i];
+  e.title=document.getElementById("etitle").value.trim()||e.card.west;
+  var t=document.getElementById("etext").value.trim();
+  if(t)e.text=t;
+  if(e.name)e.name=e.title;
+  save(); renderPlay(); toast("Saved.");
+}
+function delEntry(i){
+  if(!confirm("Delete “"+(S.entries[i].title||S.entries[i].card.west)+"” from this session?"))return;
+  var k=S.entries[i].key, ix=S.drawn.indexOf(k); if(ix>=0)S.drawn.splice(ix,1);
+  S.entries.splice(i,1); save(); renderPlay();
+}
+function editNested(i,k){
+  var n=S.entries[i].nested[k];
+  app().innerHTML='<button class="btn ghost" onclick="renderPlay()">← Back to the session</button>'+
+  '<h1>Edit sub-card</h1><div class="card-stage">'+
+  '<div class="card-arcana">'+esc(n.lens)+(n.card?' · '+esc(n.card):'')+'</div>'+
+  '<label class="fld" for="ntitle">Title</label>'+
+  '<input type="text" id="ntitle" value="'+esc(n.title||"")+'">'+
+  '<div style="height:14px"></div><label class="fld" for="ntext">Text</label>'+
+  '<textarea id="ntext">'+esc(n.text)+'</textarea>'+
+  '<div class="row" style="margin-top:14px">'+
+  '<button class="btn primary" onclick="saveNested('+i+','+k+')">Save changes</button>'+
+  '<button class="btn ghost" onclick="renderPlay()">Cancel</button></div></div>';
+  bindGrow("ntext");
+}
+function saveNested(i,k){
+  var n=S.entries[i].nested[k];
+  n.title=document.getElementById("ntitle").value.trim()||n.title;
+  var t=document.getElementById("ntext").value.trim();
+  if(t)n.text=t;
+  save(); renderPlay(); toast("Saved.");
+}
+function delNested(i,k){
+  if(!confirm("Delete this sub-card?"))return;
+  S.entries[i].nested.splice(k,1); save(); renderPlay();
 }
 function nextChapter(){
-  if(S.scale==="full"&&S.chapter>=5){toast("Five chapters done. Finish and take the log.");return}
-  S.chapter++; save(); renderPlay(); toast("Chapter "+S.chapter);
+  if(S.chapter>=5){toast("Five chapters done. Finish and take the log.");return}
+  S.chapter++; save(); renderPlay(); toast("Chapter "+S.chapter+" — "+CHAPTERS[S.chapter-1][0]);
 }
 </script>
 <script>
-/* ---------- STAKE & ZOOM ---------- */
-var ZOOM=null;
+/* ---------- ZOOM ---------- */
 function stakeZoom(i){
-  ZOOM={idx:i}; const e=S.entries[i];
-  const subject=e.name||e.card.west;
-  app().innerHTML=`<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back to the session</button>
-  <h1>Zoom in</h1>
-  <p class="lede">You're zooming into <b>${esc(subject)}</b>. Pick a lens and pull a three-card quick draw.
-  The result gets folded back into this session's log, under that card.</p>
-  <div class="lens-grid">`+allLenses().filter(l=>l.id!==S.lens).map(l=>
-    `<button class="lens" onclick="runZoom('${l.id}')"><div class="ln">${esc(l.name)}</div>
-     <div class="lscope">${esc(l.scope)}</div><div class="ldesc">${esc(l.quick.join(" / "))}</div></button>`).join("")+
-  `</div>`;
+  ZOOM={idx:i};
+  var e=S.entries[i], subject=e.title||e.card.west;
+  app().innerHTML='<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back to the session</button>'+
+  '<h1>Zoom in</h1><p class="lede">Zooming into <b>'+esc(subject)+'</b>. Pick a lens and pull a three-card spread. '+
+  'It folds back into the log as a sub-card underneath.</p>'+
+  '<div class="lens-grid">'+allLenses().filter(function(l){return l.id!==S.lens}).map(function(l){
+    return '<button class="lens" onclick="runZoom(\''+l.id+'\')"><div class="ln">'+esc(l.name)+'</div>'+
+    '<div class="lscope">'+esc(l.scope)+'</div><div class="ldesc">'+esc(l.quick.join(" · "))+'</div></button>'}).join("")+'</div>';
 }
+var ZC=[]; var ZOOMLENS=null;
 function runZoom(lensId){
-  const l=lensById(lensId), e=S.entries[ZOOM.idx], subject=e.name||e.card.west;
-  const cards=[]; const used=new Set(S.drawn);
-  const pool=fullDeck().filter(c=>!used.has(cardKey(c)));
+  var l=lensById(lensId), e=S.entries[ZOOM.idx], subject=e.title||e.card.west;
+  ZOOMLENS=lensId; ZC=[];
   if(S.mode==="random"){
-    for(let k=0;k<3&&pool.length;k++){const j=Math.floor(Math.random()*pool.length);
-      const c=pool.splice(j,1)[0]; cards.push({card:c,rev:S.rev?Math.random()<0.5:false});}
+    var used={};S.drawn.forEach(function(k){used[k]=1});
+    var pool=fullDeck().filter(function(c){return !used[cardKey(c)]});
+    for(var k=0;k<3&&pool.length;k++){var j=Math.floor(Math.random()*pool.length);
+      var c=pool.splice(j,1)[0]; ZC.push({card:c,rev:S.rev?Math.random()<0.5:false})}
   }
-  let h=`<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back</button>
-  <h1>${esc(l.name)}: ${esc(subject)}</h1>`;
-  for(let k=0;k<3;k++){
-    const pos=l.quick[k];
-    if(cards[k]){
-      const c=cards[k];
-      h+=`<div class="card-stage${c.rev?" rev":""}"><div class="card-arcana">${esc(pos)}</div>
-        <div class="card-name">${esc(c.card.west)}</div><div class="card-trad">${esc(c.card.trad)} · ${c.rev?"Reversed":"Upright"}</div>
-        <div class="meaning"><p class="prompt">${esc(promptFor(c.card,l))}</p>
-        <p class="reminder">${esc(meaningFor(c.card,c.rev))}</p></div>
-        <div style="height:14px"></div><textarea id="z${k}" placeholder="Your reading."></textarea></div>`;
+  var h='<button class="btn ghost" onclick="ZOOM=null;renderPlay()">← Back</button>'+
+  '<h1>'+esc(l.name)+'</h1><p class="lede">On <b>'+esc(subject)+'</b>.</p>'+
+  '<label class="fld" for="ztitle">Title for this sub-card</label>'+
+  '<input type="text" id="ztitle" value="'+esc(l.name+" — "+subject)+'">';
+  for(var k=0;k<3;k++){
+    var pos=l.quick[k], z=ZC[k];
+    h+='<div class="card-stage'+(z&&z.rev?" rev":"")+'"><div class="card-arcana">Position '+(k+1)+' · '+esc(pos)+'</div>';
+    if(z){
+      h+='<div class="card-name">'+esc(z.card.west)+'</div>'+
+        '<div class="card-trad">'+esc(z.card.trad)+' · '+(z.rev?"Reversed":"Upright")+'</div>'+
+        '<div class="meaning"><p class="prompt">'+esc(promptFor(z.card,l))+'</p>'+
+        '<p class="reminder">'+esc(meaningFor(z.card,z.rev))+'</p></div>';
     } else {
-      h+=`<div class="card-stage"><div class="card-arcana">${esc(pos)}</div>
-        <label class="fld" for="zc${k}">Type the card you drew</label>
-        <input type="text" id="zc${k}" placeholder="e.g. Five of Swords reversed">
-        <div style="height:12px"></div><textarea id="z${k}" placeholder="Your reading."></textarea></div>`;
+      h+='<label class="fld" for="zc'+k+'">Card you drew</label>'+
+        '<input type="text" id="zc'+k+'" placeholder="e.g. Five of Swords reversed" oninput="zcLook('+k+')">'+
+        '<div id="zm'+k+'" class="meaning" style="margin-top:12px"></div>';
     }
+    h+='<div style="height:14px"></div><textarea id="z'+k+'" placeholder="Your reading for this position."></textarea></div>';
   }
-  h+=`<button class="btn primary" onclick='saveZoom(${JSON.stringify(lensId)},${JSON.stringify(cards.map(c=>({k:cardKey(c.card),w:c.card.west,r:c.rev})))})'>Fold this back in</button>`;
+  h+='<button class="btn primary" onclick="saveZoom(\''+lensId+'\')">Fold this back in</button>';
   app().innerHTML=h;
+  for(var m=0;m<3;m++)bindGrow("z"+m);
 }
-function saveZoom(lensId,cardMeta){
-  const l=lensById(lensId), e=S.entries[ZOOM.idx];
-  let lines=[];
-  for(let k=0;k<3;k++){
-    const txt=(document.getElementById("z"+k)||{}).value||"";
-    let cname=cardMeta[k]?cardMeta[k].w+(cardMeta[k].r?" (reversed)":""):
-      ((document.getElementById("zc"+k)||{}).value||"—");
-    if(txt.trim())lines.push(l.quick[k]+" — "+cname+": "+txt.trim());
-    if(cardMeta[k])S.drawn.push(cardMeta[k].k);
+function zcLook(k){
+  var v=document.getElementById("zc"+k).value, box=document.getElementById("zm"+k);
+  var p=parseCard(v), l=lensById(ZOOMLENS);
+  if(!p||!l){box.innerHTML="";return}
+  box.innerHTML='<p class="prompt">'+esc(promptFor(p.card,l))+'</p>'+
+    '<p class="reminder">'+esc(meaningFor(p.card,p.rev))+'</p>';
+}
+function saveZoom(lensId){
+  var l=lensById(lensId), e=S.entries[ZOOM.idx], lines=[], cards=[];
+  for(var k=0;k<3;k++){
+    var txt=(document.getElementById("z"+k)||{}).value||"";
+    var cn="";
+    if(ZC[k]){cn=ZC[k].card.west+(ZC[k].rev?" (reversed)":""); S.drawn.push(cardKey(ZC[k].card))}
+    else{var raw=(document.getElementById("zc"+k)||{}).value||"";var p=parseCard(raw);
+      if(p){cn=p.card.west+(p.rev?" (reversed)":""); S.drawn.push(cardKey(p.card))} else cn=raw||"—"}
+    if(txt.trim()){lines.push(l.quick[k]+" — "+cn+": "+txt.trim()); cards.push(cn)}
   }
   if(!lines.length){toast("Nothing written — nothing folded in.");return}
+  var ti=(document.getElementById("ztitle")||{}).value||(l.name+" — "+(e.title||e.card.west));
   e.nested=e.nested||[];
-  e.nested.push({lens:l.name,title:l.name+" on "+(e.name||e.card.west),text:lines.join("\n")});
+  e.nested.push({lens:l.name,title:ti.trim(),card:cards.join(", "),text:lines.join("\n")});
   ZOOM=null; save(); renderPlay(); toast("Folded into the log.");
 }
 
-/* ---------- REGISTER / GRIMOIRE / ARCHIVE ---------- */
-function regCount(){return J(K_REG,[]).length}
+/* ---------- REGISTER / GRIMOIRE ---------- */
 function renderRegister(){
-  const r=J(K_REG,[]);
-  app().innerHTML=`<button class="btn ghost" onclick="${S?"renderPlay()":"renderHome()"}">← Back</button>
-  <h1>The register</h1>
-  <p class="lede">Everyone and everything you've named across sessions. Barons, beasts, towns — they can ride into the next region with you.</p>`+
-  (r.length?`<div class="chips">`+r.map((x,i)=>`<button class="chip" onclick="alert(${JSON.stringify(JSON.stringify(x.name+" — "+x.lens+" ("+x.session+")\n\n"+x.note)).replace(/'/g,"&#39;")})">
-    ${esc(x.name)} <span class="k">${esc(x.lens)}</span></button>`).join("")+`</div>
-    <div style="height:20px"></div><button class="btn ghost" onclick="if(confirm('Clear the whole register?')){DB.del(K_REG);renderRegister()}">Clear register</button>`
-  :`<p class="dim">Nothing named yet. Court cards ask for names — those land here.</p>`);
+  var r=J(K_REG,[]);
+  app().innerHTML='<button class="btn ghost" onclick="'+(S?"renderPlay()":"renderHome()")+'">← Back</button>'+
+  '<h1>The register</h1><p class="lede">Everyone and everything you\'ve named across sessions.</p>'+
+  (r.length?r.map(function(x,i){return '<div class="entry"><div class="ehead">'+esc(x.name)+'</div>'+
+    '<div class="emeta">'+esc(x.lens)+' · '+esc(x.session)+'</div><div class="etext">'+esc(x.note)+'</div>'+
+    '<div class="row noprint" style="margin-top:8px"><button class="btn sm ghost" onclick="delReg('+i+')">Remove</button></div></div>'}).join("")
+  :'<p class="dim">Nothing named yet. Court cards ask for names — those land here.</p>');
 }
+function delReg(i){var r=J(K_REG,[]);r.splice(i,1);SJ(K_REG,r);renderRegister()}
 function renderGrimoire(){
-  const g=J(K_GRIM,{}); const keys=Object.keys(g);
-  let h=`<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Grimoire</h1>
-  <p class="lede">Every reading you've ever written, kept against the card that prompted it. The same card means something different each time you meet it.</p>`;
-  if(!keys.length)h+=`<p class="dim">Empty. It fills as you play.</p>`;
+  var g=J(K_GRIM,{}), keys=Object.keys(g);
+  var h='<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Grimoire</h1>'+
+  '<p class="lede">Every reading you\'ve written, kept against the card that prompted it.</p>';
+  if(!keys.length)h+='<p class="dim">Empty. It fills as you play.</p>';
   else{
-    const deck=fullDeck();
-    h+=deck.filter(c=>g[cardKey(c)]).map(c=>{
-      const list=g[cardKey(c)];
-      return `<div class="entry"><div class="ehead">${esc(c.west)}</div>
-      <div class="emeta">${esc(c.trad)} · ${list.length} reading${list.length===1?"":"s"}</div>`+
-      list.map(x=>`<p class="small" style="margin:4px 0"><span class="dim">${esc(x.lens)} · ${esc(x.at.slice(0,10))}</span><br>${esc(x.text)}</p>`).join("")+`</div>`;
-    }).join("");
-    h+=`<button class="btn ghost" onclick="if(confirm('Erase the grimoire?')){DB.del(K_GRIM);renderGrimoire()}">Erase grimoire</button>`;
+    h+=fullDeck().filter(function(c){return g[cardKey(c)]}).map(function(c){
+      var list=g[cardKey(c)];
+      return '<div class="entry"><div class="ehead">'+esc(c.west)+'</div>'+
+      '<div class="emeta">'+esc(c.trad)+' · '+list.length+' reading'+(list.length===1?"":"s")+'</div>'+
+      list.map(function(x){return '<p class="small" style="margin:6px 0"><span class="dim">'+esc(x.lens)+
+        ' · '+esc(x.at.slice(0,10))+'</span><br>'+esc(x.text)+'</p>'}).join("")+'</div>'}).join("");
+    h+='<button class="btn ghost" onclick="if(confirm(\'Erase the whole grimoire?\')){DB.del(K_GRIM);renderGrimoire()}">Erase grimoire</button>';
   }
   app().innerHTML=h;
 }
+
+/* ---------- ARCHIVE ---------- */
 function renderArchive(){
-  const a=J(K_ARCH,[]);
-  let h=`<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Past sessions</h1>`;
-  if(!a.length)h+=`<p class="dim">No finished sessions yet.</p>`;
-  else h+=a.map((s,i)=>`<div class="entry"><div class="ehead">${esc(s.title||"Untitled")}</div>
-    <div class="emeta">${esc(lensById(s.lens)?lensById(s.lens).name:s.lens)} · ${esc(s.started.slice(0,10))} · ${s.entries.length} cards</div>
-    <div class="row"><button class="btn sm" onclick="renderLog(${i})">Open log</button></div></div>`).join("");
+  var a=J(K_ARCH,[]);
+  var h='<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Past sessions</h1>';
+  if(!a.length)h+='<p class="dim">No finished sessions yet.</p>';
+  else h+=a.map(function(s,i){var l=lensById(s.lens);
+    return '<div class="entry"><div class="ehead">'+esc(s.title||"Untitled")+'</div>'+
+    '<div class="emeta">'+esc(l?l.name:s.lens)+' · '+esc(s.started.slice(0,10))+' · '+s.entries.length+' cards</div>'+
+    '<div class="row"><button class="btn sm" onclick="renderLog('+i+')">Open log</button>'+
+    '<button class="btn sm ghost" onclick="renameLog('+i+')">Rename</button>'+
+    '<button class="btn sm ghost" onclick="delLog('+i+')">Delete</button></div></div>'}).join("")+
+    '<hr class="rule"><button class="btn ghost" onclick="clearArchive()">Delete all past sessions</button>';
   app().innerHTML=h;
 }
+function renameLog(i){var a=J(K_ARCH,[]);var t=prompt("Rename this session:",a[i].title||"");
+  if(t!==null){a[i].title=t.trim();SJ(K_ARCH,a);renderArchive()}}
+function delLog(i){var a=J(K_ARCH,[]);
+  if(!confirm("Delete the log for “"+(a[i].title||"Untitled")+"”? This cannot be undone."))return;
+  a.splice(i,1);SJ(K_ARCH,a);renderArchive();toast("Deleted.")}
+function clearArchive(){if(!confirm("Delete every past session log? This cannot be undone."))return;
+  DB.del(K_ARCH);renderArchive();toast("All logs deleted.")}
 
 /* ---------- FINISH & LOG ---------- */
 function finishSession(){
-  if(!S){renderHome();return}
-  if(!S.entries.length){if(!confirm("Nothing logged. Discard?"))return;DB.del(K_SESS);S=null;return renderHome()}
+  if(!S)return renderHome();
+  if(!S.entries.length){if(!confirm("Nothing logged. Discard this session?"))return;DB.del(K_SESS);S=null;return renderHome()}
   S.ended=new Date().toISOString();
-  const a=J(K_ARCH,[]); a.unshift(JSON.parse(JSON.stringify(S))); SJ(K_ARCH,a);
+  var a=J(K_ARCH,[]); a.unshift(JSON.parse(JSON.stringify(S))); SJ(K_ARCH,a);
   DB.del(K_SESS); S=null; renderLog(0);
 }
 function logSession(i){return J(K_ARCH,[])[i]}
 function renderLog(i){
-  const s=logSession(i); if(!s)return renderHome();
-  const l=lensById(s.lens);
-  setMeta("Session log");
-  app().innerHTML=`<button class="btn ghost noprint" onclick="renderHome()">← All lenses</button>
-  <h1>${esc(s.title||"Untitled session")}</h1>
-  <p class="lede">${esc(l?l.name:s.lens)} — ${esc(l?l.scope:"")}. ${s.entries.length} cards,
-  ${s.chapter} chapter${s.chapter===1?"":"s"}, ${esc(s.started.slice(0,10))}.</p>
-  <p class="small dim">${esc(l?l.artifact:"")}</p>
-  <hr class="rule">
-  ${groupByChapter(s)}
-  <hr class="rule noprint">
-  <h3 class="noprint">Take it with you</h3>
-  <div class="row noprint">
-    <button class="btn primary" onclick="dl(${i},'md')">Markdown</button>
-    <button class="btn" onclick="dl(${i},'json')">JSON</button>
-    <button class="btn" onclick="dl(${i},'foundry')">Foundry journal</button>
-    <button class="btn" onclick="window.print()">PDF / print</button>
-    <button class="btn" onclick="copyMd(${i})">Copy text</button>
-  </div>`;
-}
-function groupByChapter(s){
-  let out="",ch=null;
-  s.entries.forEach(e=>{
-    if(e.chapter!==ch){ch=e.chapter;if(s.scale!=="quick")out+=`<h2>Chapter ${ch}</h2>`}
-    out+=`<div class="entry${e.rev?" rev":""}">
-      <div class="ehead">${esc(e.card.west)}${e.rev?" — reversed":""}${e.name?" · "+esc(e.name):""}</div>
-      <div class="emeta">${esc(e.card.trad)}</div>
-      <div class="eprompt">${esc(e.prompt)}</div>
-      <div class="etext">${esc(e.text)}</div>
-      ${(e.nested||[]).map(n=>`<div class="entry nested"><div class="ehead">${esc(n.title)}</div>
-        <div class="etext">${esc(n.text)}</div></div>`).join("")}
-    </div>`;
+  var s=logSession(i); if(!s)return renderHome();
+  var l=lensById(s.lens); setMeta("Session log");
+  var body="",ch=null;
+  s.entries.forEach(function(e){
+    if(s.scale==="full"&&e.chapter!==ch){ch=e.chapter;
+      body+='<h2>Chapter '+ch+' — '+esc(CHAPTERS[ch-1]?CHAPTERS[ch-1][0]:"")+'</h2>'}
+    body+='<div class="entry'+(e.rev?" rev":"")+'"><div class="ehead">'+esc(e.title||e.card.west)+'</div>'+
+      '<div class="emeta">'+esc(e.card.west)+' · '+esc(e.card.trad)+' · '+(e.rev?"reversed":"upright")+'</div>'+
+      '<div class="eprompt">'+esc(e.prompt)+'</div><div class="etext">'+esc(e.text)+'</div>'+
+      (e.nested||[]).map(function(n){return '<div class="entry nested"><div class="ehead">'+esc(n.title)+'</div>'+
+        '<div class="emeta">'+esc(n.lens)+'</div><div class="etext">'+esc(n.text)+'</div></div>'}).join("")+'</div>';
   });
-  return out;
+  app().innerHTML='<button class="btn ghost noprint" onclick="renderHome()">← All lenses</button>'+
+  '<h1>'+esc(s.title||"Untitled session")+'</h1>'+
+  '<p class="lede">'+esc(l?l.name:s.lens)+' — '+esc(l?l.scope:"")+'. '+s.entries.length+' cards, '+
+  esc(s.started.slice(0,10))+'.</p><p class="small dim">'+esc(l?l.artifact:"")+'</p><hr class="rule">'+body+
+  '<hr class="rule noprint"><h3 class="noprint">Take it with you</h3><div class="row noprint">'+
+  '<button class="btn primary" onclick="dl('+i+',\'md\')">Markdown</button>'+
+  '<button class="btn" onclick="dl('+i+',\'json\')">JSON</button>'+
+  '<button class="btn" onclick="dl('+i+',\'foundry\')">Foundry journal</button>'+
+  '<button class="btn" onclick="window.print()">PDF / print</button>'+
+  '<button class="btn" onclick="copyMd('+i+')">Copy text</button></div>'+
+  '<div class="row noprint" style="margin-top:14px"><button class="btn ghost" onclick="renameLog('+i+')">Rename</button>'+
+  '<button class="btn ghost" onclick="delLog('+i+')">Delete this log</button></div>';
 }
 function toMd(s){
-  const l=lensById(s.lens);
-  let m=`# ${s.title||"Untitled session"}\n\n**Lens:** ${l?l.name:s.lens} — ${l?l.scope:""}  \n`+
-   `**Artifact:** ${l?l.artifact:""}  \n**Date:** ${s.started.slice(0,10)}  \n`+
-   `**Cards:** ${s.entries.length} · **Chapters:** ${s.chapter} · **Mode:** ${s.mode==="random"?"app-drawn":"physical deck"}`+
-   `${s.rev?" · reversals on":""}\n\n---\n\n`;
-  let ch=null;
-  s.entries.forEach(e=>{
-    if(e.chapter!==ch){ch=e.chapter;if(s.scale!=="quick")m+=`## Chapter ${ch}\n\n`}
-    m+=`### ${e.card.west}${e.rev?" (reversed)":""}${e.name?" — "+e.name:""}\n`;
-    m+=`*${e.card.trad}*\n\n> ${e.prompt}\n\n${e.text}\n\n`;
-    (e.nested||[]).forEach(n=>{m+=`**${n.title}**\n\n${n.text.split("\n").map(x=>"- "+x).join("\n")}\n\n`});
+  var l=lensById(s.lens);
+  var m="# "+(s.title||"Untitled session")+"\n\n**Lens:** "+(l?l.name:s.lens)+" — "+(l?l.scope:"")+"  \n"+
+   "**Artifact:** "+(l?l.artifact:"")+"  \n**Date:** "+s.started.slice(0,10)+"  \n"+
+   "**Cards:** "+s.entries.length+" · **Mode:** "+(s.mode==="random"?"app-drawn":"physical deck")+
+   (s.rev?" · reversals on":"")+"\n\n---\n\n";
+  var ch=null;
+  s.entries.forEach(function(e){
+    if(s.scale==="full"&&e.chapter!==ch){ch=e.chapter;
+      m+="## Chapter "+ch+" — "+(CHAPTERS[ch-1]?CHAPTERS[ch-1][0]:"")+"\n\n"}
+    m+="### "+(e.title||e.card.west)+"\n";
+    m+="*"+e.card.west+" · "+e.card.trad+" · "+(e.rev?"reversed":"upright")+"*\n\n> "+e.prompt+"\n\n"+e.text+"\n\n";
+    (e.nested||[]).forEach(function(n){
+      m+="#### "+n.title+"\n\n"+n.text.split("\n").map(function(x){return "- "+x}).join("\n")+"\n\n"});
   });
-  const names=s.entries.filter(e=>e.name);
-  if(names.length)m+=`---\n\n## Named this session\n\n`+names.map(e=>`- **${e.name}** (${e.card.west})`).join("\n")+"\n";
+  var names=s.entries.filter(function(e){return e.name});
+  if(names.length)m+="---\n\n## Named this session\n\n"+names.map(function(e){return "- **"+e.name+"** ("+e.card.west+")"}).join("\n")+"\n";
   return m;
 }
 function toFoundry(s){
-  const l=lensById(s.lens);
-  const pages=[];
-  let ch=null,buf="",n=1;
-  const flush=()=>{if(buf){pages.push({name:(s.scale==="quick"?"Quick draw":"Chapter "+ch),type:"text",
-    title:{show:true,level:1},text:{format:1,content:buf}});buf=""}};
-  s.entries.forEach(e=>{
-    if(e.chapter!==ch){flush();ch=e.chapter}
-    buf+=`<h2>${e.card.west}${e.rev?" (reversed)":""}${e.name?" &mdash; "+e.name:""}</h2>`+
-      `<p><em>${e.card.trad}</em></p><blockquote><p>${e.prompt}</p></blockquote>`+
-      `<p>${e.text.replace(/\n/g,"<br>")}</p>`+
-      (e.nested||[]).map(x=>`<h3>${x.title}</h3><p>${x.text.replace(/\n/g,"<br>")}</p>`).join("");
+  var pages=[],ch=null,buf="";
+  var flush=function(){if(buf){pages.push({name:(s.scale==="full"&&ch?("Chapter "+ch+" — "+(CHAPTERS[ch-1]?CHAPTERS[ch-1][0]:"")):"Session"),
+    type:"text",title:{show:true,level:1},text:{format:1,content:buf}});buf=""}};
+  s.entries.forEach(function(e){
+    if(s.scale==="full"&&e.chapter!==ch){flush();ch=e.chapter}
+    buf+="<h2>"+(e.title||e.card.west)+"</h2><p><em>"+e.card.west+" &middot; "+e.card.trad+" &middot; "+
+      (e.rev?"reversed":"upright")+"</em></p><blockquote><p>"+e.prompt+"</p></blockquote><p>"+
+      e.text.replace(/\n/g,"<br>")+"</p>"+
+      (e.nested||[]).map(function(n){return "<h3>"+n.title+"</h3><p>"+n.text.replace(/\n/g,"<br>")+"</p>"}).join("");
   });
   flush();
-  return {name:(s.title||"The Long Ride session"),pages:pages,folder:null,flags:{longride:{lens:s.lens,scale:s.scale}},
-    _stats:{systemId:"dnd5e"}};
+  return{name:(s.title||"The Long Ride session"),pages:pages,folder:null,
+    flags:{longride:{lens:s.lens,scale:s.scale}},_stats:{systemId:"dnd5e"}};
 }
 function dl(i,fmt){
-  const s=logSession(i); if(!s)return;
-  const base=(s.title||"long-ride-session").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-  let data,name,type;
+  var s=logSession(i); if(!s)return;
+  var base=(s.title||"long-ride-session").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  var data,name,type;
   if(fmt==="md"){data=toMd(s);name=base+".md";type="text/markdown"}
   else if(fmt==="json"){data=JSON.stringify(s,null,2);name=base+".json";type="application/json"}
   else{data=JSON.stringify(toFoundry(s),null,2);name=base+".foundry.json";type="application/json"}
-  const b=new Blob([data],{type}); const u=URL.createObjectURL(b);
-  const a=document.createElement("a"); a.href=u; a.download=name; a.click();
-  setTimeout(()=>URL.revokeObjectURL(u),1500); toast("Saved "+name);
+  var b=new Blob([data],{type:type}), u=URL.createObjectURL(b);
+  var a=document.createElement("a");a.href=u;a.download=name;a.click();
+  setTimeout(function(){URL.revokeObjectURL(u)},1500); toast("Saved "+name);
 }
 function copyMd(i){
-  const s=logSession(i); if(!s)return;
-  const t=toMd(s);
-  if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Copied."),()=>fallbackCopy(t));
-  else fallbackCopy(t);
+  var s=logSession(i); if(!s)return; var t=toMd(s);
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Copied.")},function(){fb(t)});
+  else fb(t);
+  function fb(x){var a=document.createElement("textarea");a.value=x;document.body.appendChild(a);a.select();
+    try{document.execCommand("copy");toast("Copied.")}catch(e){toast("Couldn't copy — use Markdown export.")}
+    document.body.removeChild(a)}
 }
-function fallbackCopy(t){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);
-  a.select();try{document.execCommand("copy");toast("Copied.")}catch(e){toast("Couldn't copy — use Markdown export.")}
-  document.body.removeChild(a)}
 
 /* ---------- LENS BUILDER ---------- */
 function renderLensBuilder(){
-  app().innerHTML=`<button class="btn ghost" onclick="renderHome()">← Back</button>
-  <h1>Build a lens</h1>
-  <p class="lede">Five answers and the deck does the rest. A lens can be anything with a scope —
-  a religion, a rail line, a bloodline, a war.</p>
-  <label class="fld">Name</label><input type="text" id="bn" placeholder="The Line">
-  <div style="height:12px"></div><label class="fld">Scope — what it builds</label><input type="text" id="bs" placeholder="Railroads">
-  <div style="height:12px"></div><label class="fld">One-line description</label><input type="text" id="bd" placeholder="Build a rail line and everything it runs over.">
-  <div style="height:12px"></div><label class="fld">Artifact — what ends up on the table</label><input type="text" id="ba" placeholder="A route map, a company sheet, a list of stops.">
-  <div style="height:12px"></div><label class="fld">The four suits here — force / bonds / order / wealth</label>
-  <input type="text" id="b1" placeholder="Six-Guns: sabotage, strikes, gunmen"><div style="height:8px"></div>
-  <input type="text" id="b2" placeholder="Springs: crews, towns served, water stops"><div style="height:8px"></div>
-  <input type="text" id="b3" placeholder="Rails: charters, surveys, engineering"><div style="height:8px"></div>
-  <input type="text" id="b4" placeholder="Claims: land grants, freight, capital">
-  <div style="height:12px"></div><label class="fld">Quick draw — three positions, comma separated</label>
-  <input type="text" id="bq" placeholder="Where it starts, What it crosses, Who pays">
-  <div style="height:12px"></div><label class="fld">The frame — the one question every card answers</label>
-  <input type="text" id="bf" placeholder="What does this do to the line, or to what's in its way?">
-  <hr class="rule">
-  <button class="btn primary" onclick="saveLens()">Save this lens</button>
-  <p class="small dim" style="margin-top:12px">Big Sky prompts default to the card's theme plus your frame.
-  You can rewrite any individual prompt later from inside a session.</p>`;
+  app().innerHTML='<button class="btn ghost" onclick="renderHome()">← Back</button><h1>Build a lens</h1>'+
+  '<p class="lede">Five answers and the deck does the rest.</p>'+
+  '<label class="fld">Name</label><input type="text" id="bn" placeholder="The Line">'+
+  '<div style="height:12px"></div><label class="fld">Scope — what it builds</label><input type="text" id="bs" placeholder="Railroads">'+
+  '<div style="height:12px"></div><label class="fld">One-line description</label><input type="text" id="bd" placeholder="Build a rail line and everything it runs over.">'+
+  '<div style="height:12px"></div><label class="fld">Artifact — what ends up on the table</label><input type="text" id="ba" placeholder="A route map, a company sheet, a list of stops.">'+
+  '<div style="height:12px"></div><label class="fld">Six-Guns / Wands means…</label><input type="text" id="b1" placeholder="sabotage, strikes, hired guns">'+
+  '<div style="height:8px"></div><label class="fld">Springs / Cups means…</label><input type="text" id="b2" placeholder="crews, towns served, water stops">'+
+  '<div style="height:8px"></div><label class="fld">Rails / Swords means…</label><input type="text" id="b3" placeholder="charters, surveys, engineering">'+
+  '<div style="height:8px"></div><label class="fld">Claims / Pentacles means…</label><input type="text" id="b4" placeholder="land grants, freight, capital">'+
+  '<div style="height:12px"></div><label class="fld">Quick draw — three positions, comma separated</label>'+
+  '<input type="text" id="bq" placeholder="Where it starts, What it crosses, Who pays">'+
+  '<div style="height:12px"></div><label class="fld">The frame — the one question every card answers</label>'+
+  '<input type="text" id="bf" placeholder="What does this do to the line, or to what\'s in its way?">'+
+  '<hr class="rule"><button class="btn primary" onclick="saveLens()">Save this lens</button>';
 }
 function saveLens(){
-  const g=id=>document.getElementById(id).value.trim();
+  var g=function(id){return document.getElementById(id).value.trim()};
   if(!g("bn")){toast("It needs a name.");return}
-  const frame=g("bf")||"What does this reveal?";
-  const l={id:"c"+Date.now(),name:g("bn"),scope:g("bs")||"Custom",desc:g("bd")||"",
-    artifact:g("ba")||"",custom:true,
-    deck:["Full 78-card deck.","Big Sky cards open chapters; Frontier cards fill in detail.","Court cards are people — name them."],
+  var frame=g("bf")||"What does this reveal?";
+  var l={id:"c"+Date.now(),name:g("bn"),scope:g("bs")||"Custom",desc:g("bd")||"",artifact:g("ba")||"",custom:true,
+    frame:frame,
+    deck:["Full 78-card deck.","Big Sky cards open chapters; Frontier cards fill in the detail.","Court cards are people — name them."],
     suits:[g("b1")||SUITS[0][2],g("b2")||SUITS[1][2],g("b3")||SUITS[2][2],g("b4")||SUITS[3][2]],
     courts:["A newcomer","An agent in the field","A woman with power here","A man with power here"],
     world:"The final shape of it.",
-    quick:(g("bq")||"What's here, What's coming, What's buried").split(",").map(s=>s.trim()).slice(0,3),
-    p:MAJORS.map(m=>m[2].charAt(0).toUpperCase()+m[2].slice(1)+". "+frame)};
-  const c=J(K_LENS,[]); c.push(l); SJ(K_LENS,c); toast("Lens saved."); renderHome();
+    quick:(g("bq")||"What's here, What's coming, What's buried").split(",").map(function(s){return s.trim()}).slice(0,3),
+    p:MAJORS.map(function(m){return m[2].charAt(0).toUpperCase()+m[2].slice(1)+". "+frame})};
+  var c=J(K_LENS,[]);c.push(l);SJ(K_LENS,c);toast("Lens saved.");renderHome();
 }
 
 /* ---------- BOOT ---------- */
