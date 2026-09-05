@@ -1,4 +1,4 @@
-const CACHE="longride-v1";
+const CACHE="longride-v3";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",e=>{
   self.skipWaiting();
